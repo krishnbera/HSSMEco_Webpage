@@ -15,3 +15,6 @@ node_modules/
 dist/
 .venv/
 __pycache__/
+
+# Brainstorming visual companion
+.superpowers/

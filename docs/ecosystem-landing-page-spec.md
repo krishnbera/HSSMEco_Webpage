@@ -1,198 +1,174 @@
 # HSSM Ecosystem Landing Page — Content & Design Spec
 
-**Status:** Brainstorm complete — ready for copywriting and implementation planning  
-**Last updated:** 2026-08-13  
-**Scope:** Content, information architecture, and visual direction for the HSSM ecosystem homepage. This document does **not** prescribe implementation technology or layout code.
+**Version:** 2 (supersedes v1 of 2026-08-13; v1 remains in git history at commit `7d7ac97`)
+**Status:** Design approved — ready for copywriting and implementation planning
+**Last updated:** 2026-08-13
+**Scope:** Purpose, audience model, information architecture, section content, and visual direction. This document does **not** prescribe implementation technology or layout code.
 
-**Source material for this spec:** brainstorming session (2026-08-13); ecosystem preprint (`HSSM-preprint/HSSM_Ecosystem_paper.pdf`, under review, local only); cloned repositories in `repos/` (`HSSM/`, `ssm-simulators/`, `LANfactory/`, local only); existing HSSM ecosystem docs (`repos/HSSM/docs/ecosystem/` when cloned locally).
+**Source material:** brainstorming sessions (2026-08-13); ecosystem preprint (`HSSM-preprint/HSSM_Ecosystem_paper.pdf`, local only); cloned repositories in `repos/` (`HSSM/`, `ssm-simulators/`, `LANfactory/`, local only); existing HSSM ecosystem docs (`repos/HSSM/docs/ecosystem/index.md`).
+
+**What changed in v2:** v1 was a faithful record of a good brainstorm, but it described a page that contradicted the owner's stated goal of a short, concise, direct pitch — 8 sections, ~1,200 words, 8 bespoke visual artifacts including custom interactive software. v2 sets a hard budget, resolves the blocking IA question v1 deferred, replaces three redundant sections with one worked example, and corrects a model-count claim that would not have survived scrutiny. Every reversal is recorded in Appendix B with its rationale.
 
 ---
 
-## 0. Owner goals, aims, and constraints
+## 0. Owner objectives and design preferences
 
-This section records the **project owner’s stated high-level goals and preferences**. All section specs below should be read in light of these.
+### Purpose
 
-### High-level aim
+Build the **homepage for the entire HSSM ecosystem** — a short, concise, direct pitch to computational scientists on what the toolchain enables, deferring technical depth to package documentation.
 
-Build a **landing page / homepage for the entire HSSM ecosystem** that:
+The page pitches the **transformation of modeling practice** — broader model choice, richer data integration, rigorous validation, community-shared infrastructure — not "install our package."
 
-1. **Pitches computational scientists** (and other relevant researchers) on how HSSM can help **transform their computational modeling workflows** and support their **broader computational modeling enterprise** — not just sell a software package.
-2. Gives a **high-level overview of applications and possibilities** HSSM unlocks for a computational modeler: what you can *do* scientifically, not how each package is implemented.
-3. Provides enough ecosystem context that visitors understand **what the toolchain is for**, while **deferring technical detail** to package documentation, APIs, and tutorials.
-4. Positions HSSM as **connective tissue between theory and experiment** — a platform where the **mutual benefit of dialogue** between computational theorists and experimentalists is a first-class message. Both directions matter equally:
-   - **Empirical analysis:** fit state-of-the-art computational models to data.
-   - **Contribution:** bring your own models into the ecosystem for **broader community adoption**.
-5. Includes a **very strong, memorable one-line tagline** for the entire ecosystem. This is a key deliverable; exact wording is still TBD (see §4).
+### Success criteria (owner-stated, and the arbiter of every scope decision)
 
-### Content balance (owner preference)
+The page succeeds if it lands with two distinct visitors:
 
-| Do more of | Do less of |
+1. **PRIMARY — the unfamiliar researcher.** Someone who does not know HSSM and has not done process modeling leaves convinced that *this class of models and methods is the right way to model their data*.
+2. **The familiar researcher.** Someone who already knows HDDM or the SSM family leaves convinced that *the ecosystem makes the whole pipeline easy* — simulator → training → simulation-based inference → shared artifacts → hierarchical inference → analysis — and that it comes together as one system.
+
+When a scope question arises, the winning answer is whichever better serves criterion 1, then criterion 2.
+
+### General design preferences
+
+| Preference | Detail |
 |---|---|
-| “What” — applications, scientific questions, unlocked workflows | “How” — package internals, API surface, sampler backends |
-| Possibilities for computational modeling | Technical specs of individual packages |
-| Recognizable research problems | Feature checklists without scientific context |
-| Routing to docs/tutorials when depth is needed | Embedding full tutorials on the landing page |
-
-The page **may** mention the three packages and how they connect, but package sections should stay **high level**. Visitors who want depth should be sent to `lnccbrown.github.io` docs, GitHub, and the preprint.
-
-### Explicit owner preferences (design decisions)
-
-| Topic | Owner preference |
-|---|---|
-| **Hero story** | Flywheel / connective tissue between theory and experiment — **not** liberation-first, not HDDM-successor-first, not generic capability-list |
-| **Hero visual** | Simple, memorable, distinctive; must convey **both** fitting models to data **and** contributing models for community adoption; should imply **state-of-the-art methods and infrastructure** without becoming a technical diagram |
-| **Hero visual (selected)** | “Model commons” — periodic-table wall of models, expanded to show **behavioral + neural + eye-tracking** data streams (broader pitch than behavior-only); **symmetric hub** composition with equal weight on both directions |
-| **Tagline** | Must be a strong one-liner for the whole ecosystem; initial candidate batch (§4) was **not** accepted — use `[TAGLINE]` stub until a dedicated wordsmithing round |
-| **Audience structure** | Mixed audience with **equal weight**; two doors at top (“I have data” / “I have a model”); newcomers get a **section**, not a third door |
-| **HDDM lineage** | Acknowledge as successor somewhere on the page, but **not flushed out, not flashy** — one quiet credibility line, not a hero angle or large banner |
-| **Capabilities section** | **Hybrid:** 3 broad vignettes (organized by what the researcher *brings*) + capability grid below |
-| **Vignette 1** | Behavioral data — broad topic; nest specific examples inside (speed–accuracy, learning while deciding, etc.) |
-| **Vignette 2** | Covariates — neural covariates, eye tracking, physiological measures |
-| **Vignette 3** | “You have a model” — contribution and community adoption (theorist path) |
-| **Capability grid** | Owner-specified items in §6.3; additional items (scalability, openness) are recommendations, not yet owner-confirmed |
-| **Ecosystem map** | Combine **hub-and-spoke** (what it is) with **workflow ring** (simulate → train → share → infer); static first, animation-ready later |
-| **Model gallery** | Keep — hero wall expanded into browsable index |
-| **Newcomer interactivity** | Custom in-page slider widget (pre-computed sims) — **not** iframe embed of `ssms_gui` |
-| **Code on page** | **One** minimal 3-line snippet only; all other code lives in docs |
-| **Hero CTAs** | “Get started” + “Explore the ecosystem” (scroll to map) |
+| **Brevity above all** | Short, concise, direct. Any section added must displace another. |
+| **"What" over "how"** | Applications, scientific questions, unlocked workflows — not package internals, API surface, or sampler backends. |
+| **Recognizable research problems** | Speak to problems researchers already have, not feature checklists. |
+| **Route, don't embed** | When depth is needed, link to docs, tutorials, and the preprint. |
+| **Convergent, not divergent** | Show how the same machine serves both roles. Do not ask visitors to self-classify before they know what is on offer. |
+| **Show, don't assert** | Where a claim can be demonstrated in a figure, demonstrate it. |
+| **Honest claims** | No number goes on the page that cannot be verified against the source of truth at build time. |
+| **Quiet HDDM lineage** | Acknowledge as successor in one line. Not a hero angle, not a banner, not glamorized. |
+| **Static first** | Ship without animation. Animation is a later enhancement, never a dependency. |
 
 ### What this page is not
 
 - Not a replacement for HSSM, ssm-simulators, or LANfactory documentation.
-- Not a technical API reference or package comparison matrix (the ecosystem paper already has one).
-- Not a flashy HDDM marketing page — lineage is a **quiet** trust signal, not the hero story. Per owner: **do not over-emphasize or glamorize the HDDM successor narrative.**
+- Not a technical API reference or package comparison matrix (the preprint has one).
+- Not a flashy HDDM-successor marketing page.
+- Not a tutorial host, and not a beginners' microsite.
 
 ---
 
-## 1. Purpose
+## 1. Deliverable and information architecture
 
-Build a landing page that serves as the **homepage for the entire HSSM ecosystem**. The page should:
+### The deliverable is two pages
 
-1. Give a **high-level overview** of what the ecosystem enables for computational scientists and related researchers.
-2. Pitch HSSM as **connective tissue between theory and experiment** — a flywheel where theorists contribute models and experimentalists fit them to data, with **mutual benefit** and an accelerated research cycle.
-3. Emphasize the **“what”** (applications, scientific possibilities, unlocked workflows) over deep technical detail about individual packages.
-4. **Redirect** visitors to package docs, tutorials, and APIs when they need the “how.”
-5. Convey that the ecosystem is built on **state-of-the-art** probabilistic programming, simulation-based inference, and shared infrastructure — without turning the page into a methods paper.
-
----
-
-## 2. Audience
-
-The page serves a **mixed audience** with equal weight. No single persona should dominate the hero, but each section can speak more directly to one group.
-
-| Persona | Who they are | What they need from this page |
+| Page | Role | Budget |
 |---|---|---|
-| **Experimentalist / analyst** | Cognitive neuroscientist, decision scientist, computational psychiatrist with behavioral (+ often neural) data | Understand what models and workflows they can run; see that brain/behavior linkage is first-class; get to HSSM quickstart fast |
-| **Theorist / model contributor** | Computational scientist with a new or custom generative model | Understand the contribution path (simulate → train → share → community adoption); see that their model can reach a broad audience without every user retraining |
-| **Newcomer** | Student or experimentalist who has not done process modeling | Understand *why* computational modeling matters; try a model interactively; find tutorials |
+| **Landing page** | The pitch. Canonical ecosystem entry point. | ~550 words, 6 sections |
+| **Ecosystem reference** (sub-page) | The technical map. Everything a pitch must not carry. | No word budget; reference material |
 
-### Persona routing (two doors)
+### Canonical ownership moves here
 
-The page uses **two primary doors** at the top (not three). Newcomers are served by a dedicated section lower on the page rather than a third top-level door.
+This landing page **replaces** `https://lnccbrown.github.io/HSSM/ecosystem/` as the canonical description of the ecosystem. Consequences that must be handled at build time:
 
-**Rationale (owner decision):** A third “newcomer” door was considered but rejected. Newcomer content overlaps heavily with the experimentalist door (~70%: quickstart, tutorials, why-model). A lower-page section avoids forcing newcomers to self-identify at the top while still serving them.
+1. The existing ecosystem page is maintained in **HSSMSpine**. Ownership of that content moves to this project — coordinate before launch so there is one source of truth, not two.
+2. `HSSM/ecosystem/index.md` must **redirect** here rather than continue to be maintained in parallel.
+3. The technical content on that page is **not discarded** — it moves to the Ecosystem reference sub-page (see §13).
 
-| Door | Label (draft) | Leads to |
-|---|---|---|
-| **Door 1** | “I have data” | Vignette 1 & 2, HSSM quickstart, tutorials |
-| **Door 2** | “I have a model” | Vignette 3, contribution docs, ecosystem workflow map |
+**Rationale for replace-over-coexist:** two independently maintained descriptions of the same ecosystem drift. v1 listed this as an open item; deferring it made §6.5 unspecifiable, because the section's scope depends entirely on whether it is canonical or a teaser.
 
 ---
 
-## 3. Core narrative
+## 2. Budget (hard constraints)
 
-### Primary story: the flywheel
+These are not aspirations. A section that exceeds its budget must take the overage from another section.
 
-HSSM is **connective tissue between theory and experiment**. The page should make the **mutual benefit of the dialogue** between these two sides tangible — not just list features for analysts.
-
-The ecosystem accelerates the research cycle:
-
-- **Theorists** contribute models once → likelihood networks are trained once → models are shared as reusable artifacts → gain **adoption** across the community.
-- **Experimentalists** fit a broad, growing bank of models to their data without needing to understand simulation or network training → gain **insight** into mechanisms.
-- **The community** benefits collectively: contributions are amortized across studies; the model bank grows for everyone.
-
-This is the message the hero visual (“model commons”) and the shortlisted tagline candidate (“Bring a model, gain adoption. Bring data, gain insight.”) are meant to express.
-
-Key phrases already in ecosystem docs (usable as copy inspiration):
-
-- “Networks are artifacts, not code.”
-- “Training is amortised — once per model, not once per dataset.”
-- “Most users never leave HSSM: install, fit, publish.”
-- “The boundary is a contract, not a convention.” (ONNX likelihood contract — for deeper docs, not hero)
-
-### Secondary story: the liberation promise
-
-Many theoretically meaningful models lack closed-form likelihoods. Researchers have historically been limited to a narrow set of tractable canonical models (HDDM: 1000+ citations, largely one model family). HSSM unlocks the broader model space via simulation-based inference.
-
-**Suggested placement:** capabilities section or newcomer section, not the hero.
-
-- Headline candidate: **“If you can simulate it, you can fit it.”**
-- Supporting idea: forward simulation is easy; inverse inference is hard — HSSM closes that gap.
-
-### Tertiary story: HDDM lineage (quiet)
-
-HSSM is the **modern successor** to HDDM, from the same lab, built on PyMC/Bambi/ArviZ instead of deprecated PyMC2.
-
-**Owner constraint:** Draw on the lineage story, but keep it **subtle** — not flushed out, not flashy. No “successor” banner, no large comparison block, no HDDM-centric hero.
-
-**Placement:** credibility strip only — one sentence, not a hero angle.
-
-- Draft: “From the lab behind HDDM — used in 1000+ published studies.”
-
----
-
-## 4. Tagline
-
-### Requirement
-
-The ecosystem needs a **very strong, key one-line tagline** — memorable, distinctive, and accurate. This is a first-class deliverable, not an afterthought.
-
-### Status: TBD (stub: `[TAGLINE]`)
-
-A dedicated wordsmithing round is still needed. The hero should ship with a placeholder until a final tagline is chosen. **Do not block other work on tagline finalization**, but do not ship without eventually resolving it.
-
-### Shortlist (candidates to refine)
-
-| Candidate | Notes |
+| Constraint | Value |
 |---|---|
-| **“Bring a model, gain adoption. Bring data, gain insight.”** | Owner shortlisted. Captures bidirectional flywheel; may work as tagline *or* hero subline / visual captions (two parallel phrases, not strictly one line — may need tightening) |
-| “Where models meet data.” | Short, symmetric with two doors; less distinctive |
-| “If you can simulate it, you can fit it.” | Liberation story; better as capabilities headline than main tagline |
-| “From theory to data and back — faster.” | Names the loop; close to paper language |
+| Sections | **6** |
+| Total body copy | **~550 words** |
+| Scroll depth | **~4 screens** at 1440×900 |
+| Substantial visuals | **4** |
+| Bespoke interactive software | **0** — links and hover states are not "interactive software"; a custom simulation widget is |
+| Code snippets on the page | **1**, three lines |
 
-### Rejected in initial brainstorm (owner did not like these as taglines)
+---
 
-Do not reuse without substantial revision:
+## 3. Audience model
 
-- “Build a model once. Test it against any dataset.” / “Contribute once. Fit everywhere.”
-- “Any model. Any dataset. One ecosystem.”
-- “A modern open-source Python toolbox for hierarchical Bayesian neurocognitive modeling.” (accurate but doc-like, not a tagline)
-- Generic capability-first lines without the theory–experiment dialogue
+### Two cross-cutting axes
 
-### Subline (draft direction)
+The page must serve two axes at once, which if both branch produce four content tracks and a page nobody finishes:
 
-Carries specifics the tagline omits:
+| Axis | Values | How it is handled |
+|---|---|---|
+| **Role** | Theorist / experimentalist | **Branches** the layout — hero and payoff band present both, side by side |
+| **Familiarity** | New to process modeling / already an SSM user | **Depth**, not branching — the same sections serve both, with newcomers picking up an extra panel or sentence rather than a separate track |
 
-> An open Python ecosystem for hierarchical Bayesian modeling of behavior and brain.
+**Decision:** role branches, familiarity is depth. Nobody is asked to self-identify.
 
-(Exact wording TBD alongside final tagline.)
+### Role weighting
+
+**Equal in the hero and the payoff band. Asymmetric below, favoring the experimentalist.**
+
+This is a deliberate change from v1, which specified equal weight throughout. Rationale: the large majority of visitors arrive with data, not with a new model; equal weight throughout would roughly double word and visual count and break the budget. Equal *billing* at the top preserves the message that both directions matter; asymmetric *depth* below reflects who is actually reading.
+
+### Persona notes
+
+| Persona | What they need here |
+|---|---|
+| **Experimentalist / analyst** | Cognitive neuroscientist, decision scientist, computational psychiatrist with behavioral and often neural data. Needs to see what workflows are possible, that brain/behavior linkage is first-class, and how to start. |
+| **Theorist / model contributor** | Computational scientist with a new or custom generative model. Needs to see the contribution path and that their model can reach a broad audience without every user retraining. |
+| **Newcomer** | Student or experimentalist new to process modeling. Served by depth inside the worked example — never labelled "for beginners," which readers skip. |
+
+**Removed in v2:** the "two doors" persona router (v1 §6.2) and the standalone newcomer section (v1 §6.6). See Appendix B.
+
+---
+
+## 4. Narrative
+
+### The frame: the flywheel
+
+HSSM is **connective tissue between theory and experiment**. Theorists contribute models once; likelihood networks are trained once; models become reusable artifacts; experimentalists fit a growing bank of models without needing to simulate or train. Contributions are amortized across the community.
+
+### The governing content rule
+
+> **No field-level claim without an adjacent me-level payoff.**
+
+The flywheel is a claim about *the field*. Both success criteria are about *one researcher's payoff*. A visitor nodding along to an attractive abstraction is not a visitor who installs anything. So the flywheel stops being the message and becomes **the reason the payoffs exist**.
+
+This rule is enforceable during copy review: for every sentence about the community, ecosystem, or field, there must be an adjacent sentence about the reader.
+
+### The cash-out table (copy source for §6.2)
+
+| Flywheel claim (field-level) | Cash-out (me-level) |
+|---|---|
+| Contributions are amortized across the community | …which is why a bank of models is ready to fit and you never train a network |
+| Theorists publish models as shared artifacts | …which is why your model reaches researchers who would never train one themselves |
+| One toolchain replaces scattered codebases | …which is why simulate → train → share → fit is four commands, not four codebases |
+| Networks are artifacts, not code | …which is why someone else's model installs like a dependency, not a collaboration |
+
+### Supporting stories
+
+| Story | Weight | Placement |
+|---|---|---|
+| **Liberation** — many theoretically meaningful models lack closed-form likelihoods; simulation-based inference unlocks them | Secondary | Tagline territory; §6.5 |
+| **HDDM lineage** — modern successor, same lab, built on PyMC/Bambi/ArviZ rather than deprecated PyMC2 | Tertiary, quiet | §6.6, one sentence |
 
 ---
 
 ## 5. Page structure
 
-Top-to-bottom section order:
-
 ```
 1. Hero
-2. Two doors (persona router)
-3. Capabilities showcase (3 vignettes + grid)
-4. Model gallery strip
-5. Ecosystem map (hub-and-spoke + workflow ring)
-6. Newcomer section
-7. Credibility strip
-8. Community close
+2. Payoff band (both roles, equal)
+3. Worked example  ← the spine of the page
+4. The chain in four steps
+5. What's in the box
+6. Credibility · citation · community
 ```
+
+| # | Section | Words | Role weight | Primarily serves |
+|---|---|---|---|---|
+| 1 | Hero | ~35 | Equal | Both criteria |
+| 2 | Payoff band | ~90 | Equal | Both criteria |
+| 3 | Worked example | ~150 | Experimentalist | **Criterion 1** |
+| 4 | The chain in four steps | ~90 | Theorist-leaning, double-read | Criterion 2 |
+| 5 | What's in the box | ~130 | Experimentalist | Criterion 2 |
+| 6 | Credibility · citation · community | ~60 | — | Trust |
 
 ---
 
@@ -200,94 +176,87 @@ Top-to-bottom section order:
 
 ### 6.1 Hero
 
-**Goal:** Immediately convey the ecosystem’s **dual core use case** via a distinctive, simple, memorable visual:
-
-1. **Empirical analysis** — fitting computational models to data using state-of-the-art hierarchical Bayesian inference.
-2. **Contribution** — bringing your own models into the ecosystem for broader community adoption.
-
-Both directions must receive **equal visual and narrative weight**. The hero is **not** behavior-only; it must signal that neural covariates, eye tracking, and related data streams are part of the pitch (see analyst flow below).
+**Goal:** convey the ecosystem's dual use case in one distinctive, legible image, and state the shift in modeling practice in one line.
 
 #### Copy
 
 | Element | Content |
 |---|---|
-| Tagline | `[TAGLINE]` — see §4 |
-| Subline | Open Python ecosystem; hierarchical Bayesian modeling of behavior and brain (draft) |
-| Primary CTA | **Get started** → HSSM quickstart / installation |
-| Secondary CTA | **Explore the ecosystem** → smooth-scroll to §6.5 ecosystem map |
+| Tagline | See §7 — brief settled, wording pending sign-off |
+| Subline | See §7 |
+| Primary CTA | **Get started** → HSSM installation / quickstart |
+| Secondary CTA | **See it work** → smooth-scroll to §6.3 |
 
-#### Visual: “The model commons” (selected concept)
+#### Visual: the model commons
 
-**Origin:** Started as “periodic table of models” (concept 6 in brainstorm). Owner asked to **expand** it to: (a) incorporate **covariates** (neural, eye tracking) for a broader pitch, and (b) emphasize the **contribution direction** equally with the fitting direction.
+The signature visual of the site. Composition, as approved:
 
-**Composition:** Symmetric hub (Concept B — **approved** over triptych A).
+**Centre — model core.** Approximately **6 model tiles**, each a legible thin line-art model cartoon (boundaries plus stochastic trajectory). One tile **highlighted** in the warm accent (the model currently in use). One tile is an **empty dashed tile with a "+"** — the contribution slot.
 
-**Why symmetric hub over triptych:** Triptych (left: contribute → center: wall → right: fit) reads as a linear pipeline and subtly implies contribution comes “before” analysis. Symmetric hub shows **bidirectional dialogue** — both personas feed the commons and receive payoffs back.
+Tile count is deliberately low. Twenty tiles at true hero size render as texture rather than as recognizably different models, which defeats the purpose of showing model variety.
 
-**Central element:** A wall of model tiles arranged like a periodic table. Each tile is a miniature model cartoon (boundaries + stochastic trajectory). Include:
+**Centre — supporting infrastructure.** A **straight row of module tiles beneath the core**, visually subordinate to it, labelled: simulation · SBI · sampling · validation · plots. Two colour families distinguish inference machinery from validation and plotting.
 
-- ~20 tiles showing model variety (DDM, angle, Lévy, LBA, race, LCA, etc.)
-- One **empty dashed tile with “+”** — invitation to contribute
-- One **glowing/highlighted tile** — the model currently in use
+This is a v2 expansion. The centre is no longer *a model library*; it is **the ecosystem's commons** — models plus the inference machinery and validation tooling that surround them. Models remain the heart; everything else is explicitly auxiliary and supports them.
 
-**Left flow — theorist (“bring a model, gain adoption”):**
+**Left flank — the experimentalist.** Three labelled data streams, each drawn as a real miniature plot, flowing **into** the core:
 
-1. A new model tile travels **into** the wall and docks at the “+” slot.
-2. A return path shows **adoption**: connection lines spark from the new tile to other points; small user/community indicators suggest reach.
+- **Behaviour** — choice and response-time distribution
+- **Neural** — trial-wise EEG / fMRI traces
+- **Eye-tracking** — fixations and gaze scanpath
 
-**Right flow — analyst (“bring data, gain insight”):**
+A return path shows **insight**: posterior distributions over mechanism parameters.
 
-1. Three parallel data streams flow **into** the highlighted tile:
-   - Behavioral: choice/RT histogram
-   - Neural: EEG-like waveform (trial-wise covariate)
-   - Eye-tracking: gaze scanpath
-2. A return path shows **insight**: posterior distributions emerge (labeled parameter curves).
+**Right flank — the theorist.** A three-stage mechanism, not a vague spark:
 
-**Implied message (state-of-the-art without jargon):** The wall = shared model infrastructure; data streams = rich empirical inputs; posteriors = rigorous inference output; docking a new tile = extensible platform; adoption sparks = community amortization. Together: modern computational modeling enterprise, not a single-purpose fitting tool.
+1. **Your model** (dashed tile) →
+2. **Trained artifact** — captioned "trained once, shared" →
+3. **Docks specifically at the "+" tile** in the core — the arrow must terminate at the empty slot, not at the wall generally
 
-**Design notes for production:**
+A return path shows reach, captioned **"enable wider community adoption."**
 
-- Remove or replace “THEORIST” / “ANALYST” role labels from mockups — use captions only (“bring a model, gain adoption” / “bring data, gain insight”).
-- Optional formula chip (`v ~ theta + (1|participant_id)`) is **too detailed for hero** — reserve for vignette 2.
-- Keep thin line-art aesthetic; muted palette (indigo/teal) with one warm accent (orange) for the active tile.
-- Design static first; optional future animation: tiles glow as data pulses; new tile slides in periodically.
-- Hero visual must work **without** animation.
+**Captions:** "bring data, gain insight" (left) · "bring a model, gain adoption" (right). Do not label the flanks with role names such as "THEORIST" / "ANALYST" — the captions do that work.
 
-**Rejected alternatives (for reference):**
+**Interaction:** core model tiles are **clickable**, linking to the model index on the Ecosystem reference sub-page (§13). This is the entire surviving remnant of v1's model gallery section, and it gives the hero a job beyond decoration.
 
-| Concept | Why rejected |
-|---|---|
-| Triptych left-to-right | Reads as pipeline; underweights bidirectionality |
-| Two-way bridge (model ⇄ data) | Strong on fit; weaker on contribution/adoption |
-| Prism (data → mechanisms) | Fitting-only |
-| Self-assembling model cartoon | Fitting-only; busy for hero |
-| Relay loop (card → network → posterior) | Flywheel without covariate breadth |
-| Periodic table **without** covariate streams | Too narrow per owner feedback |
-| Typography-only + ambient trajectories | Depends on tagline; less distinctive use-case visual |
-| Struck-through integral (“no likelihood?”) | Inside joke; liberation not dialogue story |
-| Tabbed/carousel capabilities | Hidden content risk; rejected for capabilities section |
+#### Design notes for production
 
-#### Mockups
-
-Rough concept mockups were generated during brainstorming:
-
-- Triptych (rejected): `assets/hero_concept_A_triptych.png` (if added to repo)
-- Symmetric hub (selected): `assets/hero_concept_B_symmetric_hub.png` (if added to repo)
+- Fix the return-arrow crossing: in the mockup, the insight return path crosses an incoming data-stream arrow. Route returns beneath the stream panels, or exit from the core's lower edge.
+- Ring vs. straight row for the infrastructure modules: **deferred to implementation.** The concept is "models at the core, infrastructure auxiliary and supporting"; the arrangement can be explored against real art.
+- Mobile: flanks stack beneath the core, or degrade to captions. The hero must have a defined mobile composition — this is a content decision, not an implementation detail, and v1 wrongly deferred it as the latter.
+- Thin line-art aesthetic; muted indigo/teal palette with one warm accent (orange) for the active tile and return paths.
+- Must work **without** animation. Optional later: tiles pulse as data arrives; a new tile docks periodically.
 
 ---
 
-### 6.2 Two doors (persona router)
+### 6.2 Payoff band
 
-**Goal:** Let visitors self-select immediately after the hero.
+**Goal:** the only place below the hero where both roles get equal billing. Convert the flywheel from an abstraction into two first-person payoffs.
 
-Two cards, side by side:
+**Format:** two columns, equal visual weight. Light iconography only — no substantial visual, to protect the budget for §6.3.
 
-| Door | Headline (draft) | Body (draft) | Links |
-|---|---|---|---|
-| **I have data** | Fit computational models to your experiments | Test theoretically interesting process models on choice and response-time data — with neural, physiological, and trial-wise covariates built in. | HSSM quickstart, relevant vignettes, tutorials |
-| **I have a model** | Share your model with the community | Simulate, train a likelihood network, publish to the shared model hub — and let researchers fit your model to their data without retraining. | ssm-simulators contributing guide, LANfactory docs, ecosystem map |
+**Content:** drawn directly from the cash-out table in §4. Left column addresses the reader with data; right column the reader with a model. Each column pairs one field-level sentence with one me-level sentence, per the governing content rule.
 
-**Code snippet placement:** One minimal 3-line example lives here (experimentalist door) or in the newcomer section:
+**Links:** left → quickstart and tutorials; right → contribution guide and §6.4.
+
+**Word budget:** ~90.
+
+---
+
+### 6.3 Worked example — the spine of the page
+
+**Goal:** the section that carries the primary success criterion. It must convince a researcher unfamiliar with process modeling that this class of models fits their data — by demonstration, not assertion — and close the "can I trust an approximated likelihood?" objection in the same breath.
+
+**Format:** four panels in sequence, one continuous visual, one code snippet.
+
+| Panel | Content | What it accomplishes |
+|---|---|---|
+| **0 — the problem** | Two groups with near-identical mean response times | Makes a newcomer *feel* that summary statistics hide mechanism, without a "for beginners" label anyone would skip |
+| **1 — the model** | The one code snippet on the page, with a mixed-effects formula | Shows how little it takes to express a real hierarchical model with a covariate |
+| **2 — the answer** | Posteriors showing the groups differ in drift rate versus boundary separation | Delivers the payoff: interpretable mechanisms, with uncertainty |
+| **3 — the check** | Posterior predictive check showing the fitted model reproduces the observed data | Answers the trust objection by demonstration |
+
+**The code snippet** (the only code on the page):
 
 ```python
 import hssm
@@ -295,325 +264,266 @@ model = hssm.HSSM(data=my_data, model="ddm")
 model.sample()
 ```
 
-Keep code minimal on the page — all detailed examples live in docs.
+Panel 1 may show a formula chip (`v ~ theta + (1|participant_id)`) alongside the snippet. All longer examples live in the docs.
+
+**Trust content:** panel 3 carries it visually. **Parameter recovery** gets one sentence plus a link — it is the second thing a careful reader asks about and the cheapest possible reassurance.
+
+**Canonical dataset:** Cavanagh & Frank (2014) frontal theta data, shipped with HSSM as `cavanagh_theta`, is the natural candidate. Confirm during copy that the narrative it supports matches panels 0–3.
+
+**Word budget:** ~150.
 
 ---
 
-### 6.3 Capabilities showcase
+### 6.4 The chain in four steps
 
-**Goal:** The **heart of the page** — and the primary answer to the owner’s core question: *what applications and possibilities does HSSM unlock for a computational modeler?* Convey this without package-level technical detail.
+**Goal:** carry success criterion 2 — that the ecosystem comes together as one system, end to end.
 
-**Format:** Hybrid — **3 deep vignettes** followed by a **compact capability grid**. (Owner preferred hybrid over vignette-only or grid-only; rejected tabbed/carousel for this section due to hidden-content risk.)
+**Format:** a four-step linear diagram, with package names.
 
-#### Organizing principle (owner specification)
+```
+① Simulate & define model   →  ssm-simulators
+② Train likelihood network  →  LANfactory
+③ Share artifact            →  HuggingFace
+④ Infer hierarchically      →  HSSM
+```
 
-Vignettes are grouped by **very broad topics that appeal to a wide variety of audiences** — specifically, by **what the researcher brings** (data type, measurements, or a model). Each vignette nests **specific example questions** inside the broad topic. Do not structure vignettes as package features or model-family lists.
+**The double reading — this is the point of the section.** The same four steps must be legible two ways, and the caption must make both explicit:
 
-#### Vignette structure
+- A **theorist** reads it as *the contribution path*: this is what I do to get my model into people's hands.
+- An **experimentalist** reads it as *work already done for me*: steps ① – ③ happened before I arrived; I only do ④.
 
-Each vignette:
+**Caption direction:** something in the register of "Fitting models to your data? You only ever touch step ④. Contributing a model? The other three are one command each."
 
-- Broad topic headline (what the researcher *brings*)
-- 2–3 sentences of “what this makes possible”
-- Cluster of **recognizable research questions** (not feature bullets) — phrased as scientists would ask them
-- One strong visual
-- Link to relevant tutorial(s) / docs (redirect, not inline tutorial)
+**Do not** reproduce the full hub-and-spoke ecosystem map, the package cards, the version tables, or the auxiliary-repository footnotes. Those live on the Ecosystem reference sub-page (§13), linked once from here.
 
----
-
-#### Vignette 1: “You have behavioral data”
-
-**Owner framing:** Focus on how we can **test theoretically interesting computational models that describe the behavioral data at hand** — choice, response times, learning dynamics, etc.
-
-**Headline (draft):** Test theoretically interesting models against the behavior you measured.
-
-**Pitch:** Move beyond summary statistics. Sequential sampling and related process models decompose choices and response times into interpretable mechanisms — evidence accumulation, caution, bias, non-decision time, learning dynamics.
-
-**Example research questions (owner examples + extensions — refine in copy pass):**
-
-- How do people make decisions under conditions that favor speed?
-- How do people learn while deciding?
-- Do decision strategies change when the number of options increases?
-- Do collapsing boundaries better explain your RT distributions than fixed boundaries?
-- How do choice and RT jointly constrain theories of reinforcement learning?
-
-**Visual ideas:** Model cartoon plot; quantile-probability plot; RLSSM posterior predictive (from paper figures).
-
-**Models implied (don’t list exhaustively):** DDM variants, angle/Weibull/Lévy, race/LBA/LCA, RLSSM, choice-only models.
+**Word budget:** ~90.
 
 ---
 
-#### Vignette 2: “You have more than behavior” — covariates, neural data, eye tracking
+### 6.5 What's in the box
 
-**Owner framing:** Focus on **modeling with covariates** — neural covariates, eye tracking, and related trial-wise measurements.
+**Goal:** a dense, scannable capability list. Scientists read spec sheets; this is the section that replaces v1's three vignettes *and* its capability grid, both of which covered the same ground.
 
-**Headline (draft):** Bring neural and physiological measurements into the model itself.
-
-**Pitch:** Trial-wise covariates — EEG, fMRI, pupil, skin conductance, eye fixations — can enter **any model parameter** through hierarchical mixed-effects formulas. This is not post-hoc correlation; it is part of the generative model.
-
-**Example research questions (owner examples + extensions — refine in copy pass):**
-
-- How does brain activity modulate caution? *(owner example)*
-- How do you model preference-based decision making leveraging an eye-tracking experiment? *(owner example)*
-- Does frontal theta modulate decision caution? (canonical `cavanagh_theta` story)
-- Do clinical symptoms or interventions track specific computational parameters?
-- How does attention (fixation patterns) modulate evidence accumulation? (aDDM)
-
-**Visual ideas:** cavanagh_theta dataset schematic; formula chip `v ~ theta + (1|participant_id)`; EEG trace + posterior on `a` or `v`.
-
-**Canonical example:** Cavanagh & Frank (2014) frontal theta dataset (shipped with HSSM as `cavanagh_theta`).
-
----
-
-#### Vignette 3: “You have a model”
-
-**Owner decision:** Selected over alternative vignette topics considered in brainstorm: “you have populations” (clinical/individual differences), “you have a real task” (messy designs), “you have candidate models” (model comparison). Owner chose the **theorist contribution** angle to balance vignettes 1–2 (analyst-focused) and to align with the flywheel / two-door story.
-
-**Headline (draft):** Contribute once. Let the community fit it everywhere.
-
-**Pitch:** If you can simulate from a model, the ecosystem provides a streamlined path to make it estimable: generate training data, train a likelihood approximation network, publish to the shared HuggingFace hub. Every researcher can then fit your model hierarchically to their own data — without costly per-study retraining.
-
-**Example research questions / value props (draft):**
-
-- You built a new accumulator model — how do you get it into the hands of experimentalists?
-- Your model has no closed-form likelihood — can it still be fit hierarchically with neural covariates?
-- Can networks trained in sbi or BayesFlow be shared through the same pipeline?
-
-**Visual ideas:** simulate → train → share → infer pipeline; HuggingFace model card; empty “+” tile from hero visual.
-
-**Key copy lines:**
-
-- “Train once per model, not once per dataset.”
-- “Networks are artifacts, not code.”
-
----
-
-#### Capability grid (below vignettes)
-
-Scannable grid: icon + short phrase + one line. Sweeps up ecosystem capabilities **derived from** the three vignettes — things a modeler gets from the toolchain as a whole.
-
-**Owner-specified grid items (must include):**
+**Format:** compact grid, icon + short phrase + one line each.
 
 | Capability | One-line description (draft) |
 |---|---|
-| **Hierarchical Bayesian inference** | Pool information across participants; estimate individual and group parameters with uncertainty |
-| **Simulation-based inference** | Work with models that do not have analytical likelihoods — via trained likelihood surrogates (LANs) and related methods |
+| **Model families** | Diffusion variants, race and LBA/LCA accumulators, attention models, and reinforcement-learning SSMs — with a path to add your own |
+| **Hierarchical Bayesian inference** | Pool across participants; estimate individual and group parameters with uncertainty |
+| **Simulation-based inference** | Fit models with no analytical likelihood, via trained likelihood surrogates |
 | **Full mixed-effects models** | `lmer`-style formulas on any model parameter — conditions, covariates, random intercepts and slopes |
-| **Complete inference workflow** | Support for a full Bayesian inference workflow — plotting, validation, and analysis (PPC, model comparison, QP plots, model cartoons) |
-| **Ease of contribution & knowledge sharing** | Streamlined path from simulator to shared artifact; community model hub; contributions benefit everyone |
+| **Trial-wise covariates** | EEG, fMRI, pupil, skin conductance, and fixations enter the generative model itself, not a post-hoc correlation |
+| **Learning and deciding jointly** | RLSSMs, where decision parameters are driven by a learning process |
+| **Complete inference workflow** | Posterior predictive checks, model comparison, quantile-probability plots, model cartoons |
+| **Scale and interoperability** | GPU-accelerated gradient-based samplers; built on PyMC/Bambi/ArviZ; import networks from sbi or BayesFlow via ONNX |
 
-**Recommended additions (brainstorm — not yet owner-confirmed):**
+**Claim discipline — no model counts.** Name **families**, never numbers. See §10 for why, and for what the numbers actually are.
 
-| Capability | One-line description (draft) |
-|---|---|
-| **Learning + deciding jointly** | RLSSM: combine reinforcement learning with sequential sampling decision processes |
-| **Scalability** | GPU-accelerated, gradient-based samplers |
-| **Openness & interoperability** | Built on PyMC/Bambi/ArviZ; import from sbi/BayesFlow; ONNX as exchange format |
-
-Grid items not given their own vignette should still feel covered by the three vignettes above.
+**Word budget:** ~130.
 
 ---
 
-### 6.4 Model gallery strip
+### 6.6 Credibility, citation, community
 
-**Goal:** Make the “100+ models” claim tangible. Visual rhyme with the hero’s model wall.
-
-**Format:** Horizontally scrollable (carousel) strip of model tiles. Each tile:
-
-- Miniature model cartoon
-- Model name (e.g., `ddm`, `angle`, `lba3`, `race_no_bias_angle_4`)
-- Optional: one-line descriptor
-- Link to model docs / tutorial
-
-**Content source:** ssm-simulators model registry; HSSM `supported_models`.
-
-**Interaction:** Browsing collection — not core messaging. Can be static scroll on mobile.
-
-**Relationship to hero:** Hero = conceptual commons; gallery = expanded, linkable index.
-
----
-
-### 6.5 Ecosystem map
-
-**Goal:** Answer two questions in one visual (owner requested **both** hub-and-spoke and workflow-first approaches combined):
-
-1. **What is this?** — the packages and how they relate (hub-and-spoke)
-2. **How do I interact with the ecosystem?** — especially when starting with a new model: simulate → train → share → infer (workflow ring)
-
-**Owner note:** Visitors should understand they can engage at different entry points — most analysts only need HSSM; contributors follow the full loop. Packages can also be used independently (ssm-simulators alone for simulation; LANfactory optional for custom networks).
-
-**Format:** Static **hub-and-spoke with numbered journey ring** (animation-ready for later). Persona-lens toggle was considered but not selected.
-
-#### Hub (center)
-
-**HSSM** — “Most users only ever touch this.”
-
-#### Spokes (4 nodes)
-
-| Node | Role |
-|---|---|
-| **ssm-simulators** | Fast forward simulation; training data generation; model registry |
-| **LANfactory** | Train LAN/CPN/OPN networks; export to ONNX |
-| **HuggingFace hub** (`franklab/HSSM`) | Shared repository of trained likelihood networks |
-| *(HSSM at center consumes networks at runtime)* | |
-
-#### Numbered journey ring (contribution path)
-
-```
-① Simulate & define model     →  ssm-simulators
-② Train likelihood network    →  LANfactory
-③ Share artifact              →  HuggingFace
-④ Community infers            →  HSSM
-```
-
-**Caption (draft):** “Fitting models to your data? HSSM is all you need. Contributing a new model? Follow the loop.”
-
-#### Below the diagram
-
-Package cards with:
-
-- One-sentence pitch
-- “Start here if you want to…” (from existing ecosystem docs)
-- Link to package docs and GitHub
-
-#### Footnote line (auxiliary repos — not on main diagram)
-
-- `LAN_pipeline_minimal` — cluster orchestration
-- `hddm-wfpt` — analytical DDM likelihood (ships with HSSM)
-- Future: HSSMCortex, HSSMeister, HSSMSpine (coordination)
-
-**Reference:** Existing ecosystem map content in HSSM docs (`docs/ecosystem/index.md`) and https://lnccbrown.github.io/HSSM/ecosystem/
-
----
-
-### 6.6 Newcomer section
-
-**Goal:** On-ramp for visitors who don’t yet do computational modeling. Not a third door — a section lower on the page.
-
-**Headline (draft):** New to computational modeling?
-
-#### Content blocks
-
-1. **Why model?** (static visual)
-   - Two groups with identical mean RTs but different underlying parameters.
-   - Message: summary statistics hide mechanism; process models decompose behavior.
-
-2. **Feel it in your hands** (interactive)
-   - **Custom in-page slider widget** (selected — not iframe embed).
-   - Pre-computed simulations; user adjusts drift, boundary, bias (and optionally collapse angle).
-   - RT distribution updates in real time.
-   - Styled to match site; no install required.
-   - Alternative considered: embed `ssms_gui` HuggingFace Space — rejected in favor of lightweight custom widget.
-
-3. **Low barrier proof**
-   - `pip install hssm` + 3-line quickstart (if not already shown in doors).
-   - “Runs in Colab” / workshop mention.
-
-4. **Routing**
-   - HSSM tutorials, quickstart, workshop archive, paper.
-
----
-
-### 6.7 Credibility strip
-
-**Goal:** Trust signals without dominating the page.
-
-**Content (draft):**
+**Goal:** trust signals and practical next steps, without dominating the page. Merges v1's §6.7 and §6.8.
 
 | Element | Treatment |
 |---|---|
-| HDDM lineage | One quiet line: “From the lab behind HDDM — used in 1000+ published studies.” |
-| Institution | Brown University; Carney Institute; Center for Computation and Visualization; BRAINSTORM |
-| Funding | NIMH, ONR (as in paper acknowledgments) |
-| Paper | Link to preprint: Fengler et al. 2026, bioRxiv — “HSSM: A Widely Applicable Toolbox for Hierarchical Bayesian Neurocognitive Modeling” |
+| HDDM lineage | One quiet line: "From the lab behind HDDM — used in over 1,000 published studies." No banner, no comparison block. |
+| Institutions | Brown University; Carney Institute for Brain Science; Center for Computation and Visualization; BRAINSTORM |
+| Funding | NIMH, ONR (per paper acknowledgments) |
+| Paper | Preprint link, phrased so it does not expire when the paper leaves review (see §10) |
 | Built on | Logo strip: PyMC, Bambi, ArviZ, JAX, ONNX, HuggingFace |
+| Community | GitHub Discussions; contribution invitation; citation block (paper plus per-package Zenodo DOIs) |
 
-Keep HDDM mention **subtle** — no large “successor” banner, no extended HDDM comparison, no flashy “we’re the new HDDM” creative. One line + move on.
-
-**Preprint:** Link prominently in credibility strip — paper is under review and will be published soon; landing page can serve as entry point while preprint is the canonical scientific reference.
-
----
-
-### 6.8 Community close
-
-**Goal:** Invite participation and provide practical next steps.
-
-**Content (draft):**
-
-- Contribution invitation (theorists: add a model; analysts: open an issue, share results)
-- GitHub Discussions link (HSSM repo)
-- Workshop / tutorial archive
-- Citation block (paper + Zenodo software archives per package)
-- Optional: link to `ssms_gui` for extended exploration
+**Word budget:** ~60.
 
 ---
 
-## 7. Visual & design direction
+## 7. Tagline and subline
 
-### Aesthetic (from hero mockups)
+### The tagline's job (settled)
+
+**Name the shift in practice** — what changes about how you work.
+
+The hero visual and its captions already state the flywheel explicitly. A tagline that restates it would spend the page's most valuable line on something already said, competing with the picture instead of complementing it. This is the most likely reason v1's first candidate batch felt flat: every candidate was in territory the visual had already occupied.
+
+Note also that v1's shortlisted candidate — "Bring a model, gain adoption. Bring data, gain insight." — is now **spoken for**: it is the two hero captions. That is its correct home.
+
+### Brief
+
+| Constraint | Requirement |
+|---|---|
+| Territory | What changes about how you model — the shift in practice |
+| Length | **≤ 8 words** |
+| Jargon | None. Must land on a reader who has never heard of a sequential sampling model |
+| Relationship to visual | Complements the captions; must not restate the flywheel |
+| Standalone | Must survive being read aloud in a talk, printed on a slide, and truncated in a search result |
+| Subline dependency | May lean on the subline for specifics, but must not be meaningless without it |
+
+### Candidates (fresh batch under the new brief — pending owner sign-off)
+
+| Candidate | Words | Note |
+|---|---|---|
+| **Model what you mean.** | 4 | Shortest and most quotable. Names the shift precisely: you model the process you actually theorize, not the tractable proxy. Risk: may read as too abstract without the subline. |
+| **Test the model you actually believe.** | 6 | Most direct statement of the shift. Slight risk of sounding accusatory about current practice. |
+| **Your best model, not your most convenient one.** | 8 | Most explicit about the trade-off being eliminated. At the length ceiling. |
+| **Fit the model your theory implies.** | 6 | Clean, confident, closest to how a methods paper would put it. Least distinctive. |
+| **Modeling that keeps pace with your theory.** | 7 | Warmest register; frames the ecosystem as infrastructure that has caught up. Slightly vaguer. |
+| **From theory to inference, without the detour.** | 7 | Names the removed friction. Risk: "detour" needs the reader to already know what the detour was. |
+
+**Recommendation:** "Model what you mean." — with a subline carrying the specifics. It is the only candidate short enough to function as an ecosystem-wide handle while still making a claim.
+
+### Subline drafts
+
+- An open Python ecosystem for hierarchical Bayesian modeling of behaviour and brain.
+- Hierarchical Bayesian inference for the process models your theory actually implies — behaviour, brain, and gaze.
+- Open Python tools for fitting neurocognitive process models to behaviour, neural, and eye-tracking data.
+
+Final wording to be chosen alongside the tagline.
+
+---
+
+## 8. Visual and design direction
+
+### Aesthetic
 
 - Clean, modern, flat-vector scientific illustration
-- Light background (off-white)
-- Muted indigo/teal palette; one warm accent (orange) for active/selected elements
+- Light background (off-white); defined dark-mode treatment if the site supports it
+- Muted indigo/teal palette; one warm accent (orange) for active and return elements
 - Thin line-art model cartoons as the signature visual language
 - Generous whitespace; minimal label text on diagrams
 
-### Signature visual elements
+### Signature elements
 
 | Element | Where used |
 |---|---|
-| Model tile / model cartoon | Hero, gallery, vignettes |
-| Data streams (RT histogram, EEG, gaze) | Hero, vignette 2 |
-| Posterior curves | Hero, vignette outputs |
-| Empty “+” tile | Hero, vignette 3, contribution CTAs |
+| Model tile / model cartoon | Hero core, worked example, capability grid |
+| Infrastructure module tile | Hero infrastructure row |
+| Data streams (RT histogram, neural trace, gaze scanpath) | Hero left flank |
+| Posterior curves | Hero left return, worked example panel 2 |
+| Empty "+" tile | Hero core, hero right flank target, contribution CTAs |
+
+### The four substantial visuals
+
+1. Hero commons (§6.1)
+2. Worked example, four panels as one composite (§6.3)
+3. Four-step chain (§6.4)
+4. Capability grid iconography (§6.5) — lightweight, a set rather than a scene
 
 ### Animation policy
 
-- **Ship static first** for hero and ecosystem map.
-- Optional later: hero pulse animation, journey ring highlight on scroll.
-- Newcomer widget: interactive by default (sliders), not ambient animation.
+Ship static. Animation is a later enhancement and never a dependency: every visual must communicate fully in a screenshot.
 
 ---
 
-## 8. Content principles
+## 9. Content principles
 
 ### Emphasize
 
 - Scientific possibilities and recognizable research questions
-- Bidirectional theory ↔ experiment flywheel
-- Breadth of models (without listing every model in prose)
-- Neural/physiological covariates as first-class
-- Community contribution and amortized training
-- Validation culture (PPC, QP plots, model cartoons)
-- Open ecosystem (PyMC stack, ONNX, HuggingFace, sbi/BayesFlow)
+- The bidirectional theory ↔ experiment flywheel, always cashed out to a reader payoff
+- Breadth of models, by family
+- Neural, physiological, and gaze covariates as first-class
+- Validation culture — posterior predictive checks, parameter recovery, model comparison
+- Open ecosystem — PyMC stack, ONNX, HuggingFace, sbi/BayesFlow
 
 ### De-emphasize
 
 - Package internals, version matrices, API details
-- Sampler/backend enumeration (mention GPU once in grid)
-- HDDM comparison table (lives in paper)
-- Deep LAN/ONNX contract (link to docs)
+- Sampler and backend enumeration (GPU is mentioned once)
+- HDDM comparison (lives in the paper)
+- The ONNX likelihood contract (link to docs)
 
 ### Tone
 
-- Precise, confident, accessible to computational scientists and related researchers (cognitive neuroscience, computational psychiatry, decision science)
-- Not marketing-hype; not jargon-heavy
-- Speak to *problems researchers recognize*, not feature checklists
-- Pitch **transformation of modeling practice** — broader model choice, richer data integration, rigorous validation, community-shared infrastructure — not “install our package”
-
-### Messaging themes from the preprint (usable on page, non-technical)
-
-These themes from `HSSM_Ecosystem_paper.pdf` support the owner’s aims; use as copy inspiration, not verbatim blocks:
-
-- **Democratizing** access to a broad array of neurocognitive process models
-- **Forward/inverse asymmetry:** easy to simulate, hard to infer — ecosystem closes the gap
-- **Virtuous cycle:** theoreticians gain audience for models; experimentalists gain model choice; community shares amortized artifacts
-- **Clinical and basic science:** computational phenotyping, brain–behavior linkage, disorders of decision-making
-- **Design principles** (if a “why trust this” micro-section is needed): flexibility (high ceiling, low floor), extensibility (community contribution), innovation inheritance (PyMC/JAX/ArviZ ecosystem)
+- Precise, confident, accessible to computational scientists and adjacent fields
+- Not marketing hype; not jargon-heavy
+- Speak to problems researchers recognize, not feature checklists
 
 ---
 
-## 9. Key links & references
+## 10. Claims and factual accuracy
+
+Every number on the page must be verifiable against a source of truth. Verified 2026-08-13 against the local clones:
+
+| Claim | Verified value | Source |
+|---|---|---|
+| Registered model configurations | **113** | `len(ssms.config.model_config)` |
+| Models fittable in HSSM by name | **16** | `hssm._types.SupportedModels` |
+| HDDM usage | "used in over 1,000 published **studies**" | Preprint, HDDM comparison section |
+
+### Why the page names families and not numbers
+
+"100+ models" is true of *simulators* and misleading about *fitting*. A visitor who reads 100+ and then discovers that a given model has no trained network available loses trust at exactly the wrong moment. Naming families is accurate, never goes stale, and requires no build-time audit.
+
+**If numbers are ever reintroduced,** the HuggingFace repository (`franklab/HSSM`) must first be audited for what it actually hosts — that count may exceed 16 and has **not** been verified — and the figures must be generated at build time rather than hand-written.
+
+### Required corrections carried from v1
+
+| Item | Correction |
+|---|---|
+| HDDM figure | "1,000+ published **studies**", not "1,000+ citations". For this audience the distinction matters. |
+| Author list | Fengler, Xu, Bera, **Paniagua**, Omar, Frank — per the preprint. |
+| Deprecated API | `HSSM.supported_models` is deprecated (`src/hssm/base.py:506`). Use `hssm.modelconfig.list_models()`. |
+| Preprint status | bioRxiv, posted 9 June 2026, DOI `10.64898/2026.06.05.730398`. Phrase the reference so it does not expire when the paper leaves review — avoid "under review" in page copy. |
+| Upstream drift | The HSSM docs `index.md` citation is stale relative to the preprint (omits Paniagua, says "in preparation"). Worth fixing upstream before this page links to both. |
+
+---
+
+## 11. Open items
+
+| Item | Owner | Notes |
+|---|---|---|
+| Tagline final wording | Copy | Brief settled (§7); candidate batch awaiting sign-off |
+| Subline final wording | Copy | Choose alongside tagline |
+| Worked-example dataset | Content | Confirm `cavanagh_theta` supports the panel 0–3 narrative |
+| Hero production artwork | Design | Fix return-arrow crossing; decide ring vs. row; define mobile composition |
+| Copy pass | Copy | All section copy is currently direction, not final text |
+| HSSMSpine coordination | Infra | Ownership transfer and redirect from `HSSM/ecosystem/` |
+| URL / hosting | Infra | Domain and deployment target |
+| Instrumentation | Infra | v1 put analytics out of scope, which leaves the success criteria unmeasurable. Recommend minimal event tracking on both CTAs so scope arguments can be settled by evidence. Not yet owner-confirmed. |
+
+---
+
+## 12. Out of scope for this spec
+
+- Technology stack (React, Astro, static site generator, etc.)
+- Responsive breakpoints and component library — **except** the hero's mobile composition, which is a content decision and is in scope (§6.1)
+- SEO and accessibility audit
+- Implementation plan and task breakdown
+- Copy finalization and legal review
+
+**Next step:** implementation planning, in a separate document.
+
+---
+
+## 13. Ecosystem reference sub-page
+
+**Goal:** hold everything the pitch must not carry, so that replacing the existing ecosystem page orphans nothing.
+
+**Content inherited from `repos/HSSM/docs/ecosystem/index.md`:**
+
+- The packages you install, and what each owns
+- Which package answers which question
+- How the pieces connect — the file-handoff chain, and why networks are artifacts rather than code
+- The ONNX likelihood contract, and what it means for openness at the edges
+- Supporting components (`hddm-wfpt`, `franklab/HSSM`, `franklab/ssms_gui`, conda-forge feedstocks)
+- Development and coordination repositories (HSSMSpine, HSSMCortex)
+- Tracking runs with MLflow
+- Version compatibility
+- Where to ask
+
+**Additions:**
+
+- Full model index, generated from the registry rather than hand-curated, and the link target for the hero's clickable tiles
+- Auxiliary repositories (`LAN_pipeline_minimal`; future HSSMCortex, HSSMeister, HSSMSpine coordination)
+
+**Linked from:** §6.4 (once), and the footer.
+
+---
+
+## 14. Key links and references
 
 ### Package docs
 
@@ -627,14 +537,14 @@ These themes from `HSSM_Ecosystem_paper.pdf` support the owner’s aims; use as 
 
 - HuggingFace models: https://huggingface.co/franklab/HSSM
 - Interactive simulator GUI: https://huggingface.co/spaces/franklab/ssms_gui
-- Ecosystem map (existing): https://lnccbrown.github.io/HSSM/ecosystem/
+- Ecosystem map (to be replaced by this page): https://lnccbrown.github.io/HSSM/ecosystem/
 - ONNX likelihood contract: https://lnccbrown.github.io/HSSM/how_to/custom_onnx_likelihoods/
 
 ### Paper
 
 - **Title:** HSSM: A Widely Applicable Toolbox for Hierarchical Bayesian Neurocognitive Modeling
 - **Authors:** Fengler, Xu, Bera, Paniagua, Omar, Frank (Brown University)
-- **Preprint:** https://doi.org/10.64898/2026.06.05.730398
+- **Preprint:** bioRxiv, posted 9 June 2026 — https://doi.org/10.64898/2026.06.05.730398
 - **Local copy:** `HSSM-preprint/HSSM_Ecosystem_paper.pdf` (gitignored)
 
 ### Institutional
@@ -643,190 +553,153 @@ These themes from `HSSM_Ecosystem_paper.pdf` support the owner’s aims; use as 
 
 ---
 
-## 10. Ecosystem context (for copywriters)
-
-Brief reference — not to be reproduced verbatim on the landing page.
-
-### Three core packages
+## Appendix A: Wireframe
 
 ```
-ssm-simulators ──training data──> LANfactory ──ONNX──> HuggingFace
-                                                          │
-                                                          ▼
-                                                        HSSM
+┌──────────────────────────────────────────────────────────────────┐
+│  [TAGLINE]                                                       │
+│  Subline: open Python ecosystem, behaviour + brain               │
+│                                                                  │
+│   behaviour ─┐                          ┌─ your model            │
+│   neural ────┼──▶ [ MODEL CORE ] ◀──────┤  → artifact → "+"      │
+│   gaze ──────┘    ┌──────────────┐      └─ ← adoption            │
+│   ◀── posteriors  │ sim·SBI·samp │                               │
+│                   │ ·valid·plots │                               │
+│                   └──────────────┘                               │
+│  bring data, gain insight        bring a model, gain adoption    │
+│                                                                  │
+│  [ Get started ]     [ See it work ↓ ]                           │
+├──────────────────────────────────────────────────────────────────┤
+│  PAYOFF BAND    │  you have data  │  you have a model  │  equal  │
+├──────────────────────────────────────────────────────────────────┤
+│  WORKED EXAMPLE                                                  │
+│  ⓪ same mean RT → ① formula → ② posteriors → ③ predictive check  │
+├──────────────────────────────────────────────────────────────────┤
+│  ① simulate → ② train → ③ share → ④ infer                        │
+│  "fitting? you only touch ④"                                     │
+├──────────────────────────────────────────────────────────────────┤
+│  WHAT'S IN THE BOX  ┌────┬────┬────┬────┐                        │
+│                     └────┴────┴────┴────┘                        │
+├──────────────────────────────────────────────────────────────────┤
+│  HDDM lineage · Brown · paper · logos · cite · Discussions       │
+└──────────────────────────────────────────────────────────────────┘
 ```
 
-| Package | One-line role |
+---
+
+## Appendix B: Decisions log
+
+### v2 decisions
+
+| Decision | Choice | Rationale |
+|---|---|---|
+| Success criteria | Two-fold: unfamiliar researcher convinced of the method (primary); familiar researcher convinced of end-to-end ease | Owner |
+| Hero story | Flywheel retained, with mandatory me-level cash-out | Owner; neither success criterion is about community adoption on its own, so the flywheel needed to pay rent |
+| Audience axes | Role branches; familiarity is depth | Avoids four content tracks |
+| Role weighting | Equal in hero and payoff band; asymmetric below | Budget and traffic reality; changes v1's equal-weight-throughout |
+| Budget | 6 sections, ~550 words, ~4 screens, 4 visuals | Owner |
+| IA | This page replaces `HSSM/ecosystem/` as canonical | Owner; ends the two-sources-of-truth drift risk |
+| Technical content | Moves to an Ecosystem reference sub-page | Owner; nothing orphaned, pitch stays clean |
+| Hero centre | Model core plus auxiliary infrastructure modules | Owner; centre is the commons, not just a model library |
+| Hero tile count | ~6, down from ~20 | Twenty tiles render as texture at true hero size |
+| Hero flanks | Experimentalist left, theorist right | Owner |
+| Contribution arrow | Docks specifically at the "+" tile | Owner |
+| Adoption caption | "enable wider community adoption" | Owner |
+| Infrastructure arrangement | Ring vs. straight row deferred to implementation | Owner |
+| Tagline job | Name the shift in practice | Owner; visual captions already carry the flywheel |
+| Model breadth | Name families, no numbers | Owner; 113 simulators vs 16 fittable by name |
+| Trust content | Final panel of the worked example | Demonstration beats assertion |
+| "Why model at all" | Panel 0 of the worked example | Serves the primary criterion without a skippable beginners' label |
+| Model gallery | Cut as a section; hero tiles clickable instead | Its rationale was the "100+" claim, now dropped |
+
+### v1 decisions retained
+
+| Decision | Choice |
 |---|---|
-| **ssm-simulators** | Fast C/Cython simulators; 100+ SSM configs; RLSSM presets; training data generators |
-| **LANfactory** | Train LAN/CPN/OPN networks (PyTorch/JAX); export ONNX; upload to HuggingFace |
-| **HSSM** | User-facing hierarchical Bayesian inference; PyMC/Bambi/ArviZ; model validation plots |
+| Page type | Ecosystem homepage / landing page |
+| Hero story angle | Flywheel / connective tissue |
+| Hero visual concept | Model commons, symmetric composition |
+| Code on page | One three-line snippet only |
+| HDDM mention | Quiet credibility line only |
+| Package detail level | High level on page; redirect to docs |
+| Animation | Static first |
+| Content balance | "What" over "how" |
 
-### What HSSM enables (application-level, from paper + docs)
+### v1 decisions superseded
 
-- Hierarchical mixed-effects on any model parameter
-- Trial-wise neural/physiological covariates (EEG, fMRI, pupil, SCR, fixations)
-- RLSSM: learning + deciding jointly
-- Models without analytical likelihoods (via LANs)
-- Clinical / computational psychiatry phenotyping
-- Model comparison, PPC, QP plots, model cartoons
-- GPU-accelerated inference
-- Custom likelihoods (ONNX, JAX, blackbox; sbi/BayesFlow import)
-
-### HDDM context (for credibility strip only)
-
-- Predecessor toolbox; 1000+ citations; limited model scope
-- HSSM migrates to PyMC3+, adds full mixed-effects, broader model bank, modern SBI
-
----
-
-## 11. Open items
-
-| Item | Owner | Notes |
+| v1 decision | v2 replacement | Why |
 |---|---|---|
-| Capability grid extras | Owner | Confirm RLSSM, scalability, openness items before build |
-| Tagline | Copy | `[TAGLINE]` stub; owner rejected initial batch; one candidate shortlisted |
-| Vignette research questions | Copy | Refine 3–4 sharpest questions per vignette |
-| Hero production artwork | Design | Clean up mockup B per §6.1 notes |
-| Newcomer slider widget | Design + eng | Spec pre-computed parameter grids |
-| Model gallery curation | Content | Which models to feature vs. full index |
-| Community close copy | Copy | Citation formatting, workshop links |
-| URL / hosting | Infra | Domain, deployment target TBD |
-| Relationship to existing ecosystem page | IA | This landing page vs. `lnccbrown.github.io/HSSM/ecosystem/` — redirect, replace, or coexist? |
+| Two doors (persona router) after the hero | Cut | Fragmented the hero's convergent message; categories neither exclusive nor exhaustive; required self-ID before the pitch |
+| Equal role weight throughout | Equal in hero and payoff band only | Budget; most visitors arrive with data |
+| Three vignettes plus capability grid | One worked example plus spec sheet | v1 itself conceded the grid was covered by the vignettes |
+| Model gallery strip as a section | Clickable hero tiles | Rationale was the "100+" claim |
+| "100+ models" | Model families, no numbers | 113 simulators vs 16 fittable by name |
+| Standalone newcomer section | Panel 0 of the worked example | ~70% overlap with the analyst path by v1's own analysis |
+| Custom in-page slider widget | Cut entirely | Highest build cost on the page, lowest leverage; `ssms_gui` already exists and is linked |
+| Hub-and-spoke map plus workflow ring plus package cards | Four-step chain plus reference sub-page | Was duplicating HSSMSpine-maintained content |
+| Hero mobile composition deferred as implementation detail | In scope here | The composition chosen determines whether a mobile version is possible at all |
+| Tagline restating the flywheel | Tagline names the shift in practice | The hero captions now carry the flywheel |
 
 ---
 
-## 12. Out of scope (this spec)
+## Appendix C: Rejected approaches
 
-- Technology stack (React, Astro, static site generator, etc.)
-- Responsive breakpoints and component library
-- SEO, analytics, accessibility audit
-- Implementation plan and task breakdown
-- Copy finalization and legal review
+Do not re-propose without new rationale.
 
-**Next step when ready:** implementation planning (separate document) after tagline and copy pass.
-
----
-
-## Appendix A: Section wireframe (ASCII)
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│  [TAGLINE]                                                  │
-│  Subline: open Python ecosystem for behavior + brain      │
-│                                                             │
-│     ┌── theorist flow ──┐                                   │
-│  adoption ← [ MODEL WALL ] → insight                        │
-│     └── analyst flow ───┘   (behavior + EEG + gaze)         │
-│                                                             │
-│  [ Get started ]    [ Explore the ecosystem ↓ ]             │
-├─────────────────────────────────────────────────────────────┤
-│  ┌─────────────────┐    ┌─────────────────┐               │
-│  │  I have data    │    │  I have a model │               │
-│  └─────────────────┘    └─────────────────┘               │
-├─────────────────────────────────────────────────────────────┤
-│  VIGNETTE 1: behavioral data                                │
-│  VIGNETTE 2: behavior + brain/physiology                    │
-│  VIGNETTE 3: contribute your model                          │
-│  ┌────┬────┬────┬────┬────┬────┬────┬────┐                  │
-│  │ grid of capabilities                  │                  │
-│  └────┴────┴────┴────┴────┴────┴────┴────┘                  │
-├─────────────────────────────────────────────────────────────┤
-│  ◀ [ model ] [ model ] [ model ] ... [ model ] ▶  gallery   │
-├─────────────────────────────────────────────────────────────┤
-│           ┌─────────┐                                       │
-│     ssms ─┤         ├─ HF                                  │
-│  LANfactory─┤ HSSM  │                                     │
-│           └─────────┘                                       │
-│     ① simulate → ② train → ③ share → ④ infer                │
-├─────────────────────────────────────────────────────────────┤
-│  New to computational modeling?                             │
-│  [ why model visual ]  [ interactive slider widget ]        │
-├─────────────────────────────────────────────────────────────┤
-│  HDDM lineage · Brown · paper · PyMC/ArviZ logos            │
-├─────────────────────────────────────────────────────────────┤
-│  Contribute · Discussions · Cite                            │
-└─────────────────────────────────────────────────────────────┘
-```
-
----
-
-## Appendix B: Brainstorm decisions log
-
-| Decision | Choice | Rationale / owner input |
-|---|---|---|
-| Page type | Ecosystem homepage / landing page | Owner: overview + pitch, not implementation |
-| Primary audience | Mixed equal | Owner rejected single-audience hero optimization |
-| Persona structure | Two doors + newcomer section | Third door rejected; newcomer overlaps experimentalist |
-| Hero story angle | Flywheel / connective tissue | Owner rejected liberation-first, capability-first, HDDM-first |
-| Hero visual | Model commons — symmetric hub (B) | Owner expanded periodic-table idea with covariates + contribution |
-| Hero visual rejected | Triptych (A) | Reads as pipeline; underweights bidirectionality |
-| Hero CTAs | Get started + Explore the ecosystem | Owner selected over pip-box or door-only CTAs |
-| Capabilities format | Hybrid: 3 broad vignettes + grid | Owner; rejected tabbed/carousel for core capabilities |
-| Vignette organizing principle | By what researcher brings | Owner specification |
-| Vignette 1 | Behavioral data + nested examples | Owner examples: speed pressure, learn while deciding |
-| Vignette 2 | Covariates / neural / eye tracking | Owner examples: theta→caution, eye tracking→preference |
-| Vignette 3 | You have a model (contribution) | Owner chose over populations / real-task / model-comparison options |
-| Capability grid | Owner list + recommended extras | See §6.3; confirm extras before build |
-| Ecosystem map | Hub-and-spoke + workflow ring; static | Owner wanted both map and journey; animation later |
-| Model gallery | Keep | Owner; rhymes with hero wall |
-| Newcomer interactivity | Custom in-page slider | Owner rejected iframe embed |
-| Code on page | One 3-line snippet only | Owner |
-| HDDM mention | Quiet credibility strip only | Owner: successor yes, not flashy |
-| Tagline | TBD — key deliverable | Owner rejected initial batch; one candidate shortlisted |
-| Package detail level | High-level on page; redirect to docs | Owner core preference |
-| Paper | Preprint as reference | Under review; local copy in `HSSM-preprint/` (gitignored) |
-
----
-
-## Appendix C: Rejected approaches (full log)
-
-For future reference — do not re-propose without new rationale.
-
-### Hero story angles considered
+### Hero story angles
 
 | Angle | Verdict |
 |---|---|
-| Liberation (“if you can simulate it, you can fit it”) | Secondary — capabilities section, not hero |
-| HDDM successor / lineage | Tertiary — credibility strip only |
-| Generic capability (“hierarchical Bayes for behavior + brain”) | Too flat for hero |
-| Flywheel / connective tissue | **Selected** |
+| Flywheel / connective tissue | **Selected** (with mandatory me-level cash-out) |
+| Liberation ("if you can simulate it, you can fit it") | Secondary — tagline territory and §6.5 |
+| Ease / end-to-end as the hero | Considered in v2; folded in as the job of §6.4 instead |
+| HDDM successor / lineage | Tertiary — one line in §6.6 |
+| Generic capability ("hierarchical Bayes for behaviour + brain") | Too flat for a hero |
 
-### Hero visual concepts considered
+### Hero visual concepts
 
-See §6.1 rejected table. Additional: owner asked to keep iterating after first batch; concept 6 (periodic table) selected and expanded.
+| Concept | Verdict |
+|---|---|
+| Model commons, model core + auxiliary infrastructure | **Selected** |
+| Model commons, 20 tiles + all flows drawn (v1 §6.1) | Rejected in v2 — tiles read as texture; no mobile composition |
+| Grouped blocks (models / inference / plots as three labelled clusters) | Rejected — reads as an inventory, most diagram-like |
+| One colour-coded periodic table with a legend | Rejected — good, but weaker argument than models-at-the-core |
+| Triptych left-to-right | Reads as a pipeline; underweights bidirectionality |
+| Two-way bridge (model ⇄ data) | Strong on fit, weak on contribution |
+| Prism (data → mechanisms) | Fitting-only |
+| Self-assembling model cartoon | Fitting-only; busy |
+| Relay loop | Flywheel without covariate breadth |
+| Typography-only with ambient trajectories | Depends entirely on tagline; less distinctive |
+| Struck-through integral ("no likelihood?") | Inside joke; wrong story |
 
-### Capabilities presentation considered
+### Capabilities presentation
 
 | Format | Verdict |
 |---|---|
+| Worked example plus spec sheet | **Selected** |
 | Vignette-only (4–6 stories) | Too long |
 | Grid-only | Too generic |
-| Tabbed/carousel showcase | Hidden content risk — rejected |
-| Hybrid vignettes + grid | **Selected** |
-| Hybrid + separate model-gallery carousel | **Selected** |
+| Three vignettes plus grid | Rejected in v2 — redundant with itself |
+| Tabbed / carousel | Hidden-content risk |
 
-### Tagline candidates considered
-
-See §4 rejected list. Owner: none of first batch acceptable; dedicated session needed.
-
-### Ecosystem map treatments considered
+### Ecosystem map treatments
 
 | Format | Verdict |
 |---|---|
+| Four-step chain with double reading, plus reference sub-page | **Selected** |
+| Hub-and-spoke plus journey ring plus package cards | Rejected in v2 — duplicates maintained content, breaks budget |
 | Workflow-first only | Missing package identity |
 | Package-first three cards | Missing journey |
-| Hub-and-spoke only | Missing contribution path |
 | Layered stack | Less dialogue, more hierarchy |
-| Hub-and-spoke + journey ring | **Selected** |
-| Persona-lens toggle on map | Not selected |
+| Persona-lens toggle | Not selected |
 | Animated journey | Deferred — static first |
 
-### Newcomer interactivity considered
+### Newcomer treatment
 
 | Option | Verdict |
 |---|---|
-| Custom in-page slider widget | **Selected** |
-| iframe `ssms_gui` | Rejected — too heavy |
-| Link out only | Too weak for “feel it” goal |
-| No interactivity | Rejected |
+| Panel 0 of the worked example | **Selected** |
+| Standalone newcomer section | Rejected in v2 — overlaps the analyst path |
+| Custom in-page slider widget | Rejected in v2 — highest cost, lowest leverage |
+| iframe `ssms_gui` | Rejected in v1 |
+| Link out only | Retained as a supplement, not the main vehicle |
