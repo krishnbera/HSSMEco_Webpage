@@ -1,0 +1,17 @@
+# macOS
+.DS_Store
+
+# Local reference material (not tracked — clone or copy here for your machine)
+repos/
+HSSM-preprint/
+
+# Editor / tooling
+.cursor/
+*.swp
+*~
+
+# Dependencies (add when the site is scaffolded)
+node_modules/
+dist/
+.venv/
+__pycache__/
