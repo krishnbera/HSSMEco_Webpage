@@ -2,6 +2,7 @@
 
 **Version:** 3 (supersedes v2 of 2026-08-13, commit `1880ba2`; the v1 scaffold is at `df45898`)
 **Companion content spec:** v3 — this document's C11 and C12 are reflected there as §6.1a and §13.
+**Companion design philosophy:** [`ecosystem-landing-page-design-philosophy.md`](ecosystem-landing-page-design-philosophy.md) v1 — revises **D10** (three font families; JetBrains Mono shared with matplotlib) and **D5/D8** (one generated-figure variant, not two).
 **Status:** Stack and hosting decided. **D1, D2, D4, D5, D6, D9, D10, D11 are CLOSED. D3 (animation) and D7 (instrumentation) remain OPEN by decision. D8 (asset pipeline) is deferred to pass 2, except the hero's structure.**
 **Last updated:** 2026-08-13
 **Companion to:** [`ecosystem-landing-page-spec.md`](ecosystem-landing-page-spec.md) (v2 — content and design) · [`ecosystem-landing-page-future-features.md`](ecosystem-landing-page-future-features.md) (backlog)
@@ -232,8 +233,8 @@ Plus: contributors edit Markdown and YAML and never touch Node (R16, C6), and th
 **Mechanics, which differ by visual type:**
 
 - **Authored SVG** — build the Figma file on semantic variables with Light and Dark modes, then export via a plugin that emits CSS custom properties rather than baked hex.
-- **Generated SVG** (pass 2) — matplotlib writes inline `style=` attributes that page CSS cannot cleanly override. Do not fight this: **emit light and dark variants and swap with CSS.**
-- Note that SVG `fill` attributes cannot use `light-dark()`; fills must become CSS classes.
+- **Generated SVG** — **one variant only.** Revised by the design philosophy document (§9): dark mode is *Plate*, meaning figures stay on a paper board in both themes. matplotlib's inline `style=` attributes therefore never need overriding, and no second matplotlib style is required. This removes the light/dark variant pairing the earlier revision specified, and with it the risk of the two drifting apart.
+- Note that SVG `fill` attributes cannot use `light-dark()`; fills in *authored* artwork must become CSS classes.
 
 ---
 
@@ -282,7 +283,7 @@ Plus: contributors edit Markdown and YAML and never touch Node (R16, C6), and th
 
 | Stage | Treatment |
 |---|---|
-| **Data-bearing visuals** | Python script → SVG, light and dark variants, committed. Set `svg.fonttype: 'none'` so labels remain real `<text>` (R14) rather than outlined paths. Name elements with `set_gid()` for D3 animation targets. Seed for determinism |
+| **Data-bearing visuals** | Python script → SVG, **single variant** (figures stay on paper in both themes — design philosophy §9), committed. Set `svg.fonttype: 'none'` so labels remain real `<text>` (R14) rather than outlined paths, in **JetBrains Mono** per D10. Name elements with `set_gid()` for D3 animation targets. Seed for determinism |
 | **Authored visuals** | Figma built on semantic variables → SVG export preserving CSS custom properties → inlined. Name layers deliberately; they become animation-target ids |
 | **Four-step chain** | Astro component in HTML/CSS. Responsive, themeable, translatable for free — no SVG needed |
 | **Icons** | Shared symbol set via `astro-icon`, svgo-optimized automatically |
@@ -305,11 +306,13 @@ For a six-section page under a ~550-word budget, Tailwind's payoff never arrives
 
 ---
 
-### D10 — Typography · **DECIDED: one self-hosted font**
+### D10 — Typography · **DECIDED: three self-hosted families; the mono is shared with matplotlib**
 
-**Decision.** A single self-hosted, subset variable font, used in **both** the page CSS and the matplotlib rcParams.
+**Revised by the design philosophy document (§5).** The original decision specified *one* self-hosted font for both page and figures. The design system needs three: **Space Grotesk** (display), **IBM Plex Sans** (text), **JetBrains Mono** (labels, captions, metadata, code). All open-licence variable fonts, self-hosted and subset.
 
-**Rationale.** D8 sets `svg.fonttype: 'none'`, so generated figures reference the font by name rather than embedding outlines — the browser must have the same font or the panels render wrong. Self-hosting also avoids the third-party-request exposure that has made CDN-hosted fonts a liability for institutional sites in the EU, and removes a render-blocking third-party dependency (R17).
+**JetBrains Mono is the figure face.** Generated figures set labels, ticks, and annotations in it via matplotlib rcParams, so figure typography matches page typography exactly.
+
+**The original constraint's intent survives.** D8 sets `svg.fonttype: 'none'`, so generated figures reference the font by name rather than embedding outlines — the browser must have that font or the panels render wrong. Designating one family as the shared figure face preserves that guarantee; the other two never appear in a figure. Self-hosting still avoids the third-party-request exposure that has made CDN-hosted fonts a liability for institutional sites in the EU, and removes a render-blocking dependency (R17).
 
 ---
 

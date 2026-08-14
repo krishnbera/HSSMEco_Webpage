@@ -8,7 +8,8 @@ Early planning. Content, design, and technology are settled; hosting and copy ar
 
 | Document | Contents |
 |---|---|
-| [`docs/ecosystem-landing-page-spec.md`](docs/ecosystem-landing-page-spec.md) | Content and design spec (v2) — purpose, audience, budget, section-by-section design |
+| [`docs/ecosystem-landing-page-spec.md`](docs/ecosystem-landing-page-spec.md) | Content spec (v3) — purpose, audience, budget, section-by-section design, hero interaction |
+| [`docs/ecosystem-landing-page-design-philosophy.md`](docs/ecosystem-landing-page-design-philosophy.md) | Design philosophy (v1) — the visual system: colour law, palette, typography, layout, plates, iconography, light/dark, motion |
 | [`docs/ecosystem-landing-page-tech-spec.md`](docs/ecosystem-landing-page-tech-spec.md) | Technical spec (v2) — requirements derived from the design, and the decision register. Stack is **Astro**; hosting remains open |
 | [`docs/ecosystem-landing-page-future-features.md`](docs/ecosystem-landing-page-future-features.md) | Backlog — domain application showcase, animated visualizations, and features deferred from v2 |
 

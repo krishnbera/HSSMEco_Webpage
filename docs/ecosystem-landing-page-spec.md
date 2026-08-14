@@ -417,7 +417,11 @@ Final wording to be chosen alongside the tagline.
 
 ## 8. Visual and design direction
 
-### Aesthetic
+> **Superseded.** The aesthetic sub-section below is retained for history only. The visual system is now defined by [`ecosystem-landing-page-design-philosophy.md`](ecosystem-landing-page-design-philosophy.md) (v1), which replaces it in full.
+>
+> The material change: v3 §8 described a **muted indigo/teal palette with a warm orange accent**. The design philosophy establishes that chrome is **monochrome** and colour appears **only inside figures** — there is no accent colour and no brand colour in the interface. The rest of this section (signature elements, the four visuals, animation policy) still holds.
+
+### Aesthetic — superseded, retained for history
 
 - Clean, modern, flat-vector scientific illustration
 - Light background (off-white); defined dark-mode treatment if the site supports it
