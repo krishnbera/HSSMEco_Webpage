@@ -4,12 +4,12 @@ Homepage for the [HSSM ecosystem](https://lnccbrown.github.io/HSSM/ecosystem/) �
 
 ## Status
 
-Early planning. Content and design are settled; technology is not.
+Early planning. Content, design, and technology are settled; hosting and copy are not.
 
 | Document | Contents |
 |---|---|
 | [`docs/ecosystem-landing-page-spec.md`](docs/ecosystem-landing-page-spec.md) | Content and design spec (v2) — purpose, audience, budget, section-by-section design |
-| [`docs/ecosystem-landing-page-tech-spec.md`](docs/ecosystem-landing-page-tech-spec.md) | Technical spec — requirements derived from the design, plus an open decision register for stack, hosting, and tooling |
+| [`docs/ecosystem-landing-page-tech-spec.md`](docs/ecosystem-landing-page-tech-spec.md) | Technical spec (v2) — requirements derived from the design, and the decision register. Stack is **Astro**; hosting remains open |
 | [`docs/ecosystem-landing-page-future-features.md`](docs/ecosystem-landing-page-future-features.md) | Backlog — domain application showcase, animated visualizations, and features deferred from v2 |
 
 ## Local reference material (not in git)
