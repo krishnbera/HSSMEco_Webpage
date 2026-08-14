@@ -4,8 +4,8 @@
 **Companion content spec:** v3 — this document's C11 and C12 are reflected there as §6.1a and §13.
 **Companion design philosophy:** [`ecosystem-landing-page-design-philosophy.md`](ecosystem-landing-page-design-philosophy.md) v1 — revises **D10** (three font families; JetBrains Mono shared with matplotlib) and **D5/D8** (one generated-figure variant, not two).
 **Status:** Stack and hosting decided. **D1, D2, D4, D5, D6, D9, D10, D11 are CLOSED. D3 (animation) and D7 (instrumentation) remain OPEN by decision. D8 (asset pipeline) is deferred to pass 2, except the hero's structure.**
-**Last updated:** 2026-08-13
-**Companion to:** [`ecosystem-landing-page-spec.md`](ecosystem-landing-page-spec.md) (v2 — content and design) · [`ecosystem-landing-page-future-features.md`](ecosystem-landing-page-future-features.md) (backlog)
+**Last updated:** 2026-08-14
+**Companion to:** [`ecosystem-landing-page-spec.md`](ecosystem-landing-page-spec.md) (v3 — content and design) · [`ecosystem-landing-page-future-features.md`](ecosystem-landing-page-future-features.md) (backlog)
 
 **Source material:** technology evaluation session (2026-08-13); owner decisions (2026-08-13); web research into candidate stacks; inspection of the package CI conventions in `repos/` (local only).
 
@@ -29,7 +29,7 @@ Gathered during evaluation and from owner decisions. These drove the outcome mor
 |---|---|---|
 | C1 | **Content contributors** are rotating lab members: Python- and Markdown-literate, no Node experience | They must never install Node, run a build, or debug a dependency |
 | C2 | Initial build is **AI-assisted**; build complexity ≠ maintenance complexity | The question is "who fixes CI when it breaks", not "who runs the build" |
-| C3 | Schematic artwork is **Figma/Illustrator-authored**; data-bearing artwork is **Python-generated** | Splits R7 in two — see §3.5 |
+| C3 | Schematic artwork is **Figma/Illustrator-authored**; data-bearing artwork is **supplied as committed images** | Splits R7 in two — see §3.5. Revised 2026-08-14: see C13 |
 | C4 | **One stack serves both pages** | Must handle a bespoke interactive hero *and* a reference page |
 | C5 | The reference sub-page is a **curated map of links** into package documentation — **not** API docs or tutorials | Voids most of R3 — see §3.5 |
 | C6 | Contributors must, unaided: **edit copy**, **add collection entries**, **deploy and verify**. Not: author reference prose, not edit artwork | Makes collections the dominant functional need |
@@ -39,6 +39,7 @@ Gathered during evaluation and from owner decisions. These drove the outcome mor
 | C10 | **The owner maintains the CI and deploy pipeline**, but it must stay as general as possible | C1 governs *content contribution*; pipeline ownership is the owner's. "General" means no step that only one person can run |
 | C11 | **The hero is interactive** — hover reveals detail, elements carry links | The hero is a structured, inlined composition, not a flat image. See R22–R24 |
 | C12 | **The model index is hand-curated**, small and demonstrative | R12 is void. Removes the only Python step from the build — see D4 |
+| C13 | **This repository never installs Python, HSSM, or any scientific Python stack.** No venv, no `requirements.txt` for figure generation, no MCMC. | Owner, 2026-08-14. Data-bearing figures arrive as committed PNG (or SVG) files supplied from outside this repo. Placeholders are acceptable until those files land. Logos live in `assets/logos/`. |
 
 ---
 
@@ -122,15 +123,16 @@ The reference sub-page is a **curated map of links into the package documentatio
 
 | Visual | Source of truth | How R7 is met |
 |---|---|---|
-| Worked example panels 0, 2, 3 (RT distributions, posteriors, PPC) | **Python script in this repo** | Fully — the source is versioned code, not a design file |
-| Hero model tiles (~6 cartoons) | **Python script**, via `hssm.plotting.plot_model_cartoon` | Fully — regenerates as models change |
+| Worked example panels 0, 2, 3 (RT distributions, posteriors, PPC) | **Committed PNG (or SVG) files**, generated *outside* this repo and dropped in | Fully — the files are versioned; this repo does not run the generator (C13) |
+| Hero model tiles (~6 cartoons) | **Authored SVG** in pass 1; replaceable later by supplied cartoons | Fully — file replacement, not a pipeline |
 | Hero composition (flanks, arrows, captions, slots) | **Astro component** wrapping authored SVG | Fully — required by R24 |
 | Four-step chain | **Astro component**, HTML/CSS — likely no SVG at all | Fully |
 | Capability iconography | **Figma → SVG**, inlined | Conditionally — requires the discipline in D8 |
+| Package and institutional logos | **`assets/logos/`** | Fully — supplied raster files; do not regenerate |
 
-HSSM already generates most of the data-bearing artwork: `repos/HSSM/src/hssm/plotting/` contains `plot_model_cartoon` ([`model_cartoon.py:488`](../repos/HSSM/src/hssm/plotting/model_cartoon.py)), plus `predictive.py` and `quantile_probability.py`. The v2 spec's "thin line-art model cartoon — boundaries plus stochastic trajectory" describes `plot_model_cartoon` output literally.
+HSSM can generate most of the data-bearing artwork (`plot_model_cartoon`, predictive checks, quantile-probability plots). That generation happens **outside this repository**. The site consumes the exported files. C13 forbids installing HSSM or Python here to produce them.
 
-This also strengthens v2 §0's **"show, don't assert"** principle: the figures become genuine output of the toolchain being pitched, and cannot silently go stale.
+This still serves v2 §0's **"show, don't assert"** principle once the real PNGs land: the figures remain genuine output of the toolchain being pitched. Placeholders are a pass-1 stand-in only.
 
 ### 3.6 R12 voided — model index is hand-curated
 
@@ -275,15 +277,17 @@ Plus: contributors edit Markdown and YAML and never touch Node (R16, C6), and th
 
 ### D8 — Asset pipeline · **DEFERRED to pass 2, except the hero's structure**
 
-**Deferred (pass 2).** The generation pipeline for data-bearing visuals — worked-example panels 0, 2, 3 and the hero model tiles. Pass 1 hand-places artwork.
+**Deferred (pass 2).** Any *automated* regeneration of data-bearing visuals. Pass 1 hand-places artwork (supplied PNGs, or placeholders until they arrive).
 
 **Not deferred (pass 1).** The hero's **structure**, per R24 and §2. Interactivity already requires addressable elements; those elements are also the animation targets. This is the retrofit worth avoiding.
 
-**Recorded for pass 2, when the pipeline is built:**
+**C13 binds D8.** Figure generation is not "deferred into this repo later." If a pipeline is ever built, it lives **outside** this repository (or is invoked by a human who already has HSSM installed elsewhere) and only the exported PNG/SVG is committed here. This repo stays Node-only.
+
+**Recorded for pass 2, when supplied artwork replaces placeholders:**
 
 | Stage | Treatment |
 |---|---|
-| **Data-bearing visuals** | Python script → SVG, **single variant** (figures stay on paper in both themes — design philosophy §9), committed. Set `svg.fonttype: 'none'` so labels remain real `<text>` (R14) rather than outlined paths, in **JetBrains Mono** per D10. Name elements with `set_gid()` for D3 animation targets. Seed for determinism |
+| **Data-bearing visuals** | Generated **outside this repo** → committed PNG (or SVG), **single variant** (figures stay on paper in both themes — design philosophy §9). Prefer SVG with `svg.fonttype: 'none'` and JetBrains Mono when the supplier can export it; PNG is acceptable and is the owner's stated delivery format |
 | **Authored visuals** | Figma built on semantic variables → SVG export preserving CSS custom properties → inlined. Name layers deliberately; they become animation-target ids |
 | **Four-step chain** | Astro component in HTML/CSS. Responsive, themeable, translatable for free — no SVG needed |
 | **Icons** | Shared symbol set via `astro-icon`, svgo-optimized automatically |
@@ -363,6 +367,7 @@ Recorded so they are not re-proposed without new rationale.
 | A component library / design system | A six-section page does not amortise one |
 | Tailwind or any CSS framework | D9 |
 | Model index generation from the registry | C12 |
+| Python, HSSM, or any scientific stack in this repo | C13 — figures are supplied as files |
 
 ---
 
@@ -379,7 +384,7 @@ Recorded so they are not re-proposed without new rationale.
 | Upstream model-listing pages in HSSM and `ssm-simulators` | v3 §11, §13 | R26 — the outbound links are weak until these exist |
 | Final tagline and subline | v3 §7, §11 | Copy |
 | Hero mobile composition | v3 §6.1, §11 | R9; informs the hero component structure |
-| Worked-example dataset confirmation | v3 §11 | D8 at pass 2 |
+| Worked-example figures (PNG) | Owner supplies files; placeholders until then | Task 10 of the pass-1 plan; C13 |
 
 ---
 

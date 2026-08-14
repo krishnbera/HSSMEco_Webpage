@@ -4,32 +4,28 @@ Homepage for the [HSSM ecosystem](https://lnccbrown.github.io/HSSM/ecosystem/) �
 
 ## Status
 
-Early planning. Content, design, and technology are settled; hosting and copy are not.
+Pass 1 implementation is planned. Content, design, and technology (Astro, GitHub Pages) are settled. Copy is draft until sign-off. Hosting domain is still an owner decision.
 
 | Document | Contents |
 |---|---|
 | [`docs/ecosystem-landing-page-spec.md`](docs/ecosystem-landing-page-spec.md) | Content spec (v3) — purpose, audience, budget, section-by-section design, hero interaction |
 | [`docs/ecosystem-landing-page-design-philosophy.md`](docs/ecosystem-landing-page-design-philosophy.md) | Design philosophy (v1) — the visual system: colour law, palette, typography, layout, plates, iconography, light/dark, motion |
-| [`docs/ecosystem-landing-page-tech-spec.md`](docs/ecosystem-landing-page-tech-spec.md) | Technical spec (v2) — requirements derived from the design, and the decision register. Stack is **Astro**; hosting remains open |
+| [`docs/ecosystem-landing-page-tech-spec.md`](docs/ecosystem-landing-page-tech-spec.md) | Technical spec (v3) — requirements and decision register. Stack is **Astro**; hosting is GitHub Pages with a custom domain still to register |
 | [`docs/ecosystem-landing-page-future-features.md`](docs/ecosystem-landing-page-future-features.md) | Backlog — domain application showcase, animated visualizations, and features deferred from v2 |
+| [`docs/superpowers/plans/2026-08-14-ecosystem-landing-page-pass-1.md`](docs/superpowers/plans/2026-08-14-ecosystem-landing-page-pass-1.md) | Pass 1 implementation plan |
+
+## This repository is Node-only
+
+**Do not install Python, HSSM, or any scientific Python stack here.** There is no figure-generation pipeline in this repo: no `requirements.txt`, no venv, no MCMC. Worked-example plots and other data-bearing figures are **supplied as PNG (or SVG) files** and committed. Until they arrive, placeholders are fine. Logos are in [`assets/logos/`](assets/logos/).
 
 ## Local reference material (not in git)
 
-For local brainstorming and copy work, keep reference material in these folders. Both are **gitignored** and will not be pushed to GitHub.
+Optional, for humans reading specs. Both folders are **gitignored** and are not a build dependency.
 
 | Path | Contents |
 |---|---|
 | `repos/` | Local clones of ecosystem packages (`HSSM`, `ssm-simulators`, `LANfactory`) |
 | `HSSM-preprint/` | Ecosystem preprint PDF (`HSSM_Ecosystem_paper.pdf`) |
-
-Clone upstream packages into `repos/` as needed:
-
-```bash
-mkdir -p repos
-git clone https://github.com/lnccbrown/HSSM.git repos/HSSM
-git clone https://github.com/lnccbrown/ssm-simulators.git repos/ssm-simulators
-git clone https://github.com/lnccbrown/LANfactory.git repos/LANfactory
-```
 
 ## Paper
 

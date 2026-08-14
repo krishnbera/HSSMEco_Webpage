@@ -512,7 +512,7 @@ Every number on the page must be verifiable against a source of truth. Verified 
 |---|---|---|
 | Tagline final wording | Copy | Brief settled (§7); candidate batch awaiting sign-off |
 | Subline final wording | Copy | Choose alongside tagline |
-| Worked-example dataset | Content | Confirm `cavanagh_theta` supports the panel 0–3 narrative |
+| Worked-example dataset | Content | Pass 1 uses placeholders. Real PNG plots will be supplied from outside this repo — this site never installs HSSM or Python (tech spec C13). Narrative details are not blocking. |
 | Hero production artwork | Design | Fix return-arrow crossing; decide ring vs. row; define mobile composition |
 | **Hero hover payloads** | Copy | New in v3 (§6.1a). Every element in the table needs its one-line payload written. ~120 words total, excluded from the body budget |
 | **Hero mobile interaction** | Design | New in v3 (§6.1a). Tap-to-reveal and tap-to-follow-link compete for one gesture; resolve in design, not in the build |
