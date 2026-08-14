@@ -13,14 +13,18 @@ interface Props {
 }
 const { id, kind, label, payload, href, active = false } = Astro.props;
 const payloadId = `hero-payload-${id}`;
+const labelId = `hero-label-${id}`;
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const resolved = href?.startsWith('/') ? `${base}${href}` : href;
 
 // Linked elements are anchors; unlinked ones still take focus, because R23 makes
 // keyboard reach non-negotiable even where there is nowhere to go.
+// role="group" AccName is author-provided only — wire aria-labelledby to the label.
 const Tag = resolved ? 'a' : 'div';
-const interactive = resolved ? { href: resolved } : { tabindex: '0', role: 'group' };
+const interactive = resolved
+  ? { href: resolved }
+  : { tabindex: '0', role: 'group', 'aria-labelledby': labelId };
 ---
 <div class="hero-el__wrap">
   <Tag
@@ -31,7 +35,7 @@ const interactive = resolved ? { href: resolved } : { tabindex: '0', role: 'grou
     {...interactive}
   >
     <span class="hero-el__art" data-hero-art aria-hidden="true"><slot /></span>
-    <span class="hero-el__label label">{label}</span>
+    <span class="hero-el__label label" id={labelId}>{label}</span>
   </Tag>
   <p class="hero-el__payload caption" id={payloadId} data-hero-payload>{payload}</p>
 </div>

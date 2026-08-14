@@ -42,11 +42,21 @@ describe('HeroElement satisfies hover/focus/tap parity (R23, WCAG 2.1 SC 1.4.13)
   });
 
   it('gives every element an accessible name, not merely a title (R23)', async () => {
-    for (const props of [linked, plain]) {
-      const doc = await renderComponent(HeroElement, { props });
-      const el = doc.querySelector('[data-hero-el]')!;
-      const name = el.getAttribute('aria-label') ?? el.textContent ?? '';
-      expect(name).toContain(props.label);
+    const a = await renderComponent(HeroElement, { props: linked });
+    const linkedEl = a.querySelector('[data-hero-el]')!;
+    // Anchors get AccName from contents; do not require aria-* overrides.
+    expect(linkedEl.textContent ?? '').toContain(linked.label);
+
+    const d = await renderComponent(HeroElement, { props: plain });
+    const unlinked = d.querySelector('[data-hero-el]')!;
+    // role="group" AccName is author-provided only — not from contents.
+    const labelledBy = unlinked.getAttribute('aria-labelledby');
+    const ariaLabel = unlinked.getAttribute('aria-label');
+    expect(labelledBy || ariaLabel).toBeTruthy();
+    if (labelledBy) {
+      expect(d.getElementById(labelledBy)!.textContent!.trim()).toBe(plain.label);
+    } else {
+      expect(ariaLabel).toBe(plain.label);
     }
   });
 
