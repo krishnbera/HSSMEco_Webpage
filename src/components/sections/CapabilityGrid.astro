@@ -1,0 +1,53 @@
+---
+import SectionRule from '../SectionRule.astro';
+import Icon from '../Icon.astro';
+import type { z } from 'astro/zod';
+import type { siteCopySchema, capabilitySchema } from '../../schemas';
+
+interface Props {
+  items: { id: string; data: z.infer<typeof capabilitySchema> }[];
+  copy: z.infer<typeof siteCopySchema>['capabilities'];
+}
+const { items, copy } = Astro.props;
+const ordered = [...items].sort((a, b) => a.data.order - b.data.order);
+---
+<section id="capabilities" class="container">
+  <SectionRule number="05" title="What's in the box" />
+  <h2 class="display-l measure">{copy.heading}</h2>
+  <!-- R25: labelled as a selection, prominently — not a footnote. -->
+  <p class="body measure" data-selection-note>{copy.selectionNote}</p>
+
+  <ul class="caps">
+    {ordered.map((item) => (
+      <li class="caps__item" data-capability>
+        <Icon name={item.data.icon} class="caps__icon" />
+        <h3 class="display-s">{item.data.title}</h3>
+        <p class="body-s">{item.data.description}</p>
+      </li>
+    ))}
+  </ul>
+</section>
+
+<style>
+  .caps {
+    list-style: none; padding: 0;
+    margin: var(--space-6) 0 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-6) var(--space-5);
+  }
+  /* §12 forbids card grids with shadows and rounded corners as a layout device.
+     A hairline above each cell is the publication equivalent. */
+  .caps__item {
+    border-top: 1px solid var(--border);
+    padding-top: var(--space-3);
+    display: grid;
+    gap: var(--space-2);
+    align-content: start;
+  }
+  .caps__icon { color: var(--ink); }
+
+  /* em breakpoints — spacing law forbids bare px outside tokens (1023→64em, 599→37.5em). */
+  @media (max-width: 64em) { .caps { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 37.5em)  { .caps { grid-template-columns: 1fr; } }
+</style>

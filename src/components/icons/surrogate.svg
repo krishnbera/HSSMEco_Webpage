@@ -1,0 +1,5 @@
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+     stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+  <path d="M3 18 Q12 4 21 18" />
+  <path d="M3 14 Q12 2 21 14" stroke-dasharray="3 3" />
+</svg>

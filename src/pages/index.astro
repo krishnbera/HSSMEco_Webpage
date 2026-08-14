@@ -1,14 +1,17 @@
 ---
 import { load } from 'js-yaml';
+import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ThemeToggle from '../components/ThemeToggle.astro';
 import PayoffBand from '../components/sections/PayoffBand.astro';
 import FourStepChain from '../components/sections/FourStepChain.astro';
+import CapabilityGrid from '../components/sections/CapabilityGrid.astro';
 import Credibility from '../components/sections/Credibility.astro';
 import { siteCopySchema } from '../schemas';
 import raw from '../content/copy/site.yaml?raw';
 
 const copy = siteCopySchema.parse(load(raw));
+const capabilities = await getCollection('capabilities');
 ---
 <BaseLayout title="HSSM Ecosystem" description={copy.subline} canonicalPath="/">
   <div slot="header" class="container"><ThemeToggle /></div>
@@ -18,5 +21,6 @@ const copy = siteCopySchema.parse(load(raw));
 
   <PayoffBand copy={copy.payoff} />
   <FourStepChain copy={copy.chain} />
+  <CapabilityGrid items={capabilities} copy={copy.capabilities} />
   <Credibility copy={copy.credibility} />
 </BaseLayout>

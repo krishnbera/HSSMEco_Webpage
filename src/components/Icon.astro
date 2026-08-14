@@ -1,0 +1,11 @@
+---
+interface Props { name: string; class?: string }
+const { name, class: className } = Astro.props;
+
+// Eager glob so an unknown icon name is a build error, not a blank space.
+const icons = import.meta.glob<{ default: any }>('./icons/*.svg', { eager: true });
+const entry = icons[`./icons/${name}.svg`];
+if (!entry) throw new Error(`Unknown icon "${name}". Add src/components/icons/${name}.svg`);
+const Svg = entry.default;
+---
+<Svg class={className} width={24} height={24} aria-hidden="true" focusable="false" />
