@@ -1,0 +1,12 @@
+title: Attention models
+summary: >-
+  Fixations gate the evidence: attentional drift-diffusion and related models in which
+  where a participant looks changes what accumulates.
+order: 3
+links:
+  - label: Fittable models in HSSM
+    href: https://lnccbrown.github.io/HSSM/
+    note: HSSM documentation. Call hssm.modelconfig.list_models() for the current list.
+  - label: Simulator configurations
+    href: https://lnccbrown.github.io/ssm-simulators/
+    note: ssm-simulators documentation; the configuration tutorials cover what is available.

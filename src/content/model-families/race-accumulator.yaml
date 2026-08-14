@@ -1,0 +1,12 @@
+title: Race and accumulator models
+summary: >-
+  Independent accumulators race to threshold — linear ballistic accumulators, leaky
+  competing accumulators, and race models over two or more alternatives.
+order: 2
+links:
+  - label: Fittable models in HSSM
+    href: https://lnccbrown.github.io/HSSM/
+    note: HSSM documentation. Call hssm.modelconfig.list_models() for the current list.
+  - label: Simulator configurations
+    href: https://lnccbrown.github.io/ssm-simulators/
+    note: ssm-simulators documentation; the configuration tutorials cover what is available.

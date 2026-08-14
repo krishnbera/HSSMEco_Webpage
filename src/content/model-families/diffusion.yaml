@@ -1,0 +1,14 @@
+title: Diffusion variants
+summary: >-
+  Evidence accumulates toward one of two boundaries — the drift-diffusion model and
+  its extensions, including collapsing bounds, urgency signals, and full parameter
+  trial-to-trial variability.
+order: 1
+links:
+  - label: Fittable models in HSSM
+    href: https://lnccbrown.github.io/HSSM/
+    # R26 — no upstream page enumerates the models yet. Say what this actually is.
+    note: HSSM documentation. Call hssm.modelconfig.list_models() for the current list.
+  - label: Simulator configurations
+    href: https://lnccbrown.github.io/ssm-simulators/
+    note: ssm-simulators documentation; the configuration tutorials cover what is available.

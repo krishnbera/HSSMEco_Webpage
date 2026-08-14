@@ -1,0 +1,6 @@
+title: Complete inference workflow
+description: >-
+  Posterior predictive checks, model comparison, quantile-probability plots, model
+  cartoons
+icon: check
+order: 7

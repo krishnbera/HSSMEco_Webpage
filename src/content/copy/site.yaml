@@ -1,0 +1,104 @@
+# DRAFT copy against the content spec's briefs and budgets. Final wording is Copy's
+# (content spec §11). Budgets are tested — see tests/copy-budget.test.ts.
+#
+# Tagline: content spec §7 recommendation. Subline: §7 draft 3.
+tagline: Model what you mean.
+subline: >-
+  Open Python tools for fitting neurocognitive process models to behaviour,
+  neural, and eye-tracking data.
+
+ctaPrimary:
+  label: Get started
+  href: https://lnccbrown.github.io/HSSM/
+  hook: get-started          # R20: stable instrumentation hook, one line to activate
+ctaSecondary:
+  label: See it work
+  href: "#worked-example"
+  hook: see-it-work
+
+heroCaptions:
+  left: bring data, gain insight
+  right: bring a model, gain adoption
+
+payoff:
+  heading: What this changes for you
+  columns:
+    - field: Contributions are amortised across the community.
+      me: >-
+        Which is why a growing bank of models is ready to fit, and you never
+        simulate or train a network yourself. Bring behaviour, neural signals,
+        or gaze; read mechanism off the posterior.
+      links:
+        - { label: Quickstart, href: "https://lnccbrown.github.io/HSSM/" }
+        - { label: Tutorials, href: "https://lnccbrown.github.io/HSSM/" }
+    - field: Theorists publish models as shared artifacts.
+      me: >-
+        Which is why your model reaches researchers who would never train one
+        themselves — it installs like a dependency, not a collaboration.
+        Simulate, train, share, fit: four commands, not four codebases.
+      links:
+        - { label: Contribute a model, href: "https://lnccbrown.github.io/ssm-simulators/" }
+        - { label: The four steps, href: "#chain" }
+
+workedExample:
+  heading: One dataset, four panels
+  intro: >-
+    Two conditions, near-identical mean response times. Summary statistics say
+    nothing happened. The model says otherwise.
+  formulaChip: "a ~ conf + (1|participant_id)"
+  panels:
+    - title: The problem
+      caption: >-
+        Response-time densities for high- and low-conflict trials. The means differ
+        by milliseconds; the distributions differ in shape.
+    - title: The model
+      caption: >-
+        Three lines fit a hierarchical drift-diffusion model. The formula puts the
+        conflict effect on boundary separation, with a random intercept per participant.
+    - title: The answer
+      caption: >-
+        Posteriors for the conflict coefficient. Boundary separation shifts;
+        drift rate does not. Position, not hue, separates the two parameters.
+    - title: The check
+      caption: >-
+        Posterior predictive densities over the observed data. The fitted model
+        reproduces both conditions, including the tails the means hid.
+  recovery:
+    text: Parameter recovery is checked the same way, on simulated data.
+    href: https://lnccbrown.github.io/HSSM/
+
+chain:
+  heading: The chain in four steps
+  steps:
+    - { label: Simulate and define the model, package: ssm-simulators, href: "https://lnccbrown.github.io/ssm-simulators/" }
+    - { label: Train the likelihood network, package: LANfactory, href: "https://lnccbrown.github.io/LANfactory/" }
+    - { label: Share the artifact, package: HuggingFace, href: "https://huggingface.co/franklab/HSSM" }
+    - { label: Infer hierarchically, package: HSSM, href: "https://lnccbrown.github.io/HSSM/" }
+  caption: >-
+    Fitting models to your data? You only ever touch step four — the first three
+    happened before you arrived. Contributing a model? The other three are one
+    command each.
+  referenceLink:
+    label: How the pieces connect
+    href: "/ecosystem/"
+
+capabilities:
+  heading: What's in the box
+  # R25/§10 discipline: families, never numbers, and never a catalogue.
+  selectionNote: A selection, not a catalogue. Each family links onward to the full list.
+
+credibility:
+  lineage: From the lab behind HDDM — used in over 1,000 published studies.
+  institutions: >-
+    Brown University · Carney Institute for Brain Science · Center for Computation
+    and Visualization · BRAINSTORM
+  funding: Funded by NIMH and ONR.
+  paper:
+    text: >-
+      Fengler, Xu, Bera, Paniagua, Omar and Frank. HSSM: A Widely Applicable Toolbox
+      for Hierarchical Bayesian Neurocognitive Modeling. bioRxiv, 2026.
+    href: https://doi.org/10.64898/2026.06.05.730398
+  builtOn: [PyMC, Bambi, ArviZ, JAX, ONNX, HuggingFace]
+  community: >-
+    Questions and modeling advice go to GitHub Discussions. Cite the preprint and the
+    per-package Zenodo DOIs.

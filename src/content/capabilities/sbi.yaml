@@ -1,0 +1,5 @@
+title: Simulation-based inference
+description: >-
+  Fit models with no analytical likelihood, via trained likelihood surrogates
+icon: surrogate
+order: 3

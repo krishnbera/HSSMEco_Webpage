@@ -1,0 +1,5 @@
+title: Learning and deciding jointly
+description: >-
+  RLSSMs, where decision parameters are driven by a learning process
+icon: learning
+order: 6

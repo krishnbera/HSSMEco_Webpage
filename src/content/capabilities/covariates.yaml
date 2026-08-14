@@ -1,0 +1,6 @@
+title: Trial-wise covariates
+description: >-
+  EEG, fMRI, pupil, skin conductance, and fixations enter the generative model itself,
+  not a post-hoc correlation.
+icon: trace
+order: 5

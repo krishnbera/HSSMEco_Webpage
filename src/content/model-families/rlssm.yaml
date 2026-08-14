@@ -1,0 +1,12 @@
+title: Reinforcement-learning SSMs
+summary: >-
+  A learning process drives the decision parameters, so choice, response time, and
+  trial-by-trial learning are fitted jointly rather than in two separate stages.
+order: 4
+links:
+  - label: Fittable models in HSSM
+    href: https://lnccbrown.github.io/HSSM/
+    note: HSSM documentation. Call hssm.modelconfig.list_models() for the current list.
+  - label: Simulator configurations
+    href: https://lnccbrown.github.io/ssm-simulators/
+    note: ssm-simulators documentation; the configuration tutorials cover what is available.

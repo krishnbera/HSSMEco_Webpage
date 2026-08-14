@@ -1,0 +1,6 @@
+title: Scale and interoperability
+description: >-
+  GPU-accelerated gradient-based samplers; built on PyMC/Bambi/ArviZ; import networks
+  from sbi or BayesFlow via ONNX
+icon: exchange
+order: 8

@@ -1,0 +1,98 @@
+# 15 addressable hero elements (content spec §6.1a). Payloads are ONE LINE each and
+# total ~110 words against a ~120 ceiling. They are supplementary: the hero must be
+# complete without them (§6.1a constraint 2).
+#
+# DRAFT copy. Content spec §11 assigns final wording to Copy — edit here, not in the
+# components. tests/copy-budget.test.ts fails the build if the ceiling is breached.
+
+model-ddm:
+  kind: model
+  label: Drift diffusion
+  payload: Evidence accumulates to one of two boundaries.
+  href: /ecosystem/#diffusion
+
+model-angle:
+  kind: model
+  label: Collapsing bound
+  payload: Boundaries narrow over time as urgency builds.
+  href: /ecosystem/#diffusion
+  active: true
+
+model-race:
+  kind: model
+  label: Race accumulator
+  payload: Independent accumulators race; first past threshold wins.
+  href: /ecosystem/#race-accumulator
+
+model-attention:
+  kind: model
+  label: Attentional drift
+  payload: Where you look gates what the model accumulates.
+  href: /ecosystem/#attention
+
+model-rlssm:
+  kind: model
+  label: Learning and deciding
+  payload: Learning updates decision parameters trial by trial.
+  href: /ecosystem/#rlssm
+
+model-contribute:
+  kind: contribute
+  label: Your model
+  payload: Bring a model. Train once, share forever.
+  href: https://lnccbrown.github.io/ssm-simulators/
+
+module-simulation:
+  kind: module
+  label: Simulation
+  payload: ssm-simulators — the generative models themselves.
+  href: https://lnccbrown.github.io/ssm-simulators/
+
+module-sbi:
+  kind: module
+  label: SBI
+  payload: LANfactory — trains likelihood networks on simulated data.
+  href: https://lnccbrown.github.io/LANfactory/
+
+module-sampling:
+  kind: module
+  label: Sampling
+  payload: HSSM — hierarchical Bayesian inference on PyMC.
+  href: https://lnccbrown.github.io/HSSM/
+
+module-validation:
+  kind: module
+  label: Validation
+  payload: Predictive checks, model comparison, parameter recovery.
+  href: https://lnccbrown.github.io/HSSM/
+
+module-plots:
+  kind: module
+  label: Plots
+  payload: Posteriors, quantile-probability plots, model cartoons.
+  href: https://lnccbrown.github.io/HSSM/
+
+stream-behaviour:
+  kind: stream
+  label: Behaviour
+  payload: Choices and response times — the primary observation.
+
+stream-neural:
+  kind: stream
+  label: Neural
+  payload: Trial-wise EEG or fMRI enters the generative model.
+
+stream-gaze:
+  kind: stream
+  label: Eye-tracking
+  payload: Fixations and dwell time drive evidence accumulation.
+
+return-insight:
+  kind: return
+  label: Insight
+  payload: Posteriors over mechanism, not over summary statistics.
+
+return-adoption:
+  kind: return
+  label: Adoption
+  payload: Your model reaches people who never train networks.

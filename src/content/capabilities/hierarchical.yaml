@@ -1,0 +1,5 @@
+title: Hierarchical Bayesian inference
+description: >-
+  Pool across participants; estimate individual and group parameters with uncertainty
+icon: hierarchy
+order: 2

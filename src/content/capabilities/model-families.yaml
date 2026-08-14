@@ -1,0 +1,6 @@
+title: Model families
+description: >-
+  Diffusion variants, race and LBA/LCA accumulators, attention models, and
+  reinforcement-learning SSMs — with a path to add your own
+icon: families
+order: 1

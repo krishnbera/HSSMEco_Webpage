@@ -1,0 +1,6 @@
+title: Full mixed-effects models
+description: >-
+  `lmer`-style formulas on any model parameter — conditions, covariates, random
+  intercepts and slopes
+icon: formula
+order: 4
