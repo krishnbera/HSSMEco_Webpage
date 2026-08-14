@@ -17,4 +17,20 @@ describe('built pages carry semantic landmarks (R14)', () => {
       'https://krishnbera.github.io/HSSMEco_Webpage/',
     );
   });
+
+  it('index.html carries Open Graph and Twitter card tags (D11)', () => {
+    const doc = readDist('index.html');
+    expect(doc.querySelector('meta[property="og:type"]')?.getAttribute('content')).toBe('website');
+    expect(doc.querySelector('meta[property="og:title"]')?.getAttribute('content')).toBeTruthy();
+    expect(doc.querySelector('meta[property="og:description"]')?.getAttribute('content')).toBeTruthy();
+    expect(doc.querySelector('meta[property="og:url"]')?.getAttribute('content')).toBe(
+      'https://krishnbera.github.io/HSSMEco_Webpage/',
+    );
+    expect(doc.querySelector('meta[property="og:image"]')?.getAttribute('content')).toBe(
+      'https://krishnbera.github.io/HSSMEco_Webpage/og.png',
+    );
+    expect(doc.querySelector('meta[name="twitter:card"]')?.getAttribute('content')).toBe(
+      'summary_large_image',
+    );
+  });
 });

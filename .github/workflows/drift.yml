@@ -1,0 +1,77 @@
+name: Drift
+
+# Scheduled drift detection, on the pattern the three packages already run (C9).
+# The default build is pinned (npm ci against a committed lockfile) so a contributor's
+# copy-edit PR never fails for an unrelated reason. This job does the opposite: a
+# fresh, unpinned resolve, so an upstream break surfaces here as ONE deduped
+# `drift`-labelled issue for the healing queue rather than in someone's PR.
+on:
+  schedule:
+    - cron: "0 6 * * 1"     # weekly, Mondays
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  unpinned:
+    runs-on: ubuntu-latest
+    outputs:
+      result: ${{ job.status }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version-file: .nvmrc }
+
+      - name: Resolve dependencies fresh
+        run: rm -f package-lock.json && npm install
+
+      - run: npm run build
+      - run: npm test
+
+      - uses: lycheeverse/lychee-action@v2
+        with:
+          args: "--no-progress './dist/**/*.html' './docs/**/*.md' 'README.md'"
+          fail: true
+
+  report:
+    needs: [unpinned]
+    if: always()
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+    concurrency:
+      group: drift-issue-${{ github.repository }}
+      cancel-in-progress: false
+    steps:
+      - name: Create, update, or close the deduped drift issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RESULT: ${{ needs.unpinned.result }}
+        run: |
+          set -euo pipefail
+          KEY="drift-key: HSSMEco_Webpage-scheduled"
+          TITLE="drift: HSSMEco_Webpage scheduled checks failing"
+          RUN_URL="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+
+          EXISTING=$(gh issue list --label drift --state open --limit 50 \
+            --json number,body --jq ".[] | select(.body | contains(\"$KEY\")) | .number" | head -1)
+
+          if [ "$RESULT" = "success" ]; then
+            if [ -n "$EXISTING" ]; then
+              gh issue comment "$EXISTING" --body "Green again: $RUN_URL"
+              gh issue close "$EXISTING"
+            fi
+            exit 0
+          fi
+
+          BODY=$(printf '%s\n\n%s\n\nRun: %s\n' \
+            "An unpinned dependency resolve broke the build, the tests or the link check." \
+            "<!-- $KEY -->" "$RUN_URL")
+
+          if [ -n "$EXISTING" ]; then
+            gh issue comment "$EXISTING" --body "Still failing: $RUN_URL"
+          else
+            gh issue create --title "$TITLE" --label drift --body "$BODY"
+          fi

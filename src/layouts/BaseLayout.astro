@@ -31,6 +31,14 @@ const canonical = new URL(canonicalPath.replace(/^\//, ''), canonicalBase).href;
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    {/* Resolve against canonicalBase (site + base path), not Astro.site alone —
+        otherwise project-pages deploys advertise an og:image that 404s. */}
+    <meta property="og:image" content={new URL('og.png', canonicalBase).href} />
+    <meta name="twitter:card" content="summary_large_image" />
     <Font cssVariable="--font-display" preload />
     <Font cssVariable="--font-text" preload />
     <Font cssVariable="--font-mono" preload />

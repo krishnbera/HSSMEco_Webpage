@@ -1,0 +1,42 @@
+name: PR preview
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: preview-${{ github.event.number }}
+  cancel-in-progress: true
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - if: github.event.action != 'closed'
+        run: npm ci
+
+      - if: github.event.action != 'closed'
+        name: Build at the preview's own base path
+        env:
+          SITE_URL: ${{ vars.SITE_URL }}
+          # The preview lives under a deeper prefix than production, which is exactly
+          # why base is environment-driven rather than hard-coded.
+          BASE_PATH: ${{ vars.BASE_PATH }}pr-preview/pr-${{ github.event.number }}/
+        run: npm run build
+
+      - uses: rossjrw/pr-preview-action@v1
+        with:
+          source-dir: dist
+          preview-branch: gh-pages
+          umbrella-dir: pr-preview
+          action: auto      # deploys on open/sync, removes on close

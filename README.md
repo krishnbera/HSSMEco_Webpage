@@ -30,3 +30,16 @@ Optional, for humans reading specs. Both folders are **gitignored** and are not 
 ## Paper
 
 Fengler et al. (2026). *HSSM: A Widely Applicable Toolbox for Hierarchical Bayesian Neurocognitive Modeling.* bioRxiv. https://doi.org/10.64898/2026.06.05.730398
+
+See [`CITATION.cff`](CITATION.cff) for machine-readable citation metadata.
+
+## Licence
+
+Two licences, on purpose (D11):
+
+| Licence | Covers |
+|---|---|
+| [`LICENSE`](LICENSE) — MIT | Site code (Astro components, scripts, config, tests) |
+| [`LICENSE-CONTENT`](LICENSE-CONTENT) — CC BY 4.0 | Prose, figures, and other content assets |
+
+Code may be reused under MIT; content requires attribution under CC BY 4.0.

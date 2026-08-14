@@ -1,0 +1,42 @@
+cff-version: 1.2.0
+message: If you refer to the HSSM ecosystem, please cite the paper below.
+title: The HSSM Ecosystem
+abstract: >-
+  Landing page and reference for the HSSM ecosystem — hierarchical Bayesian
+  inference for neurocognitive process models.
+type: software
+authors:
+  - family-names: Fengler
+    given-names: Alexander
+  - family-names: Xu
+    given-names: Yang
+  - family-names: Bera
+    given-names: Krishn
+  - family-names: Paniagua
+    given-names: Carlos
+  - family-names: Omar
+    given-names: Aisulu
+  - family-names: Frank
+    given-names: Michael J.
+license: MIT
+preferred-citation:
+  type: article
+  title: >-
+    HSSM: A Widely Applicable Toolbox for Hierarchical Bayesian Neurocognitive
+    Modeling
+  authors:
+    - family-names: Fengler
+      given-names: Alexander
+    - family-names: Xu
+      given-names: Yang
+    - family-names: Bera
+      given-names: Krishn
+    - family-names: Paniagua
+      given-names: Carlos
+    - family-names: Omar
+      given-names: Aisulu
+    - family-names: Frank
+      given-names: Michael J.
+  journal: bioRxiv
+  year: 2026
+  doi: 10.64898/2026.06.05.730398
