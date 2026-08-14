@@ -1,0 +1,39 @@
+---
+import SectionRule from '../SectionRule.astro';
+import type { z } from 'astro/zod';
+import type { siteCopySchema } from '../../schemas';
+
+interface Props { copy: z.infer<typeof siteCopySchema>['credibility'] }
+const { copy } = Astro.props;
+---
+<section id="credibility" class="container">
+  <SectionRule number="06" title="Credibility, citation, community" />
+
+  <!-- §6.6: one quiet line. No banner, no comparison block. -->
+  <p class="display-s measure">{copy.lineage}</p>
+
+  <dl class="cred">
+    <div><dt class="label">Built at</dt><dd class="body-s">{copy.institutions}</dd></div>
+    <div><dt class="label">Funding</dt><dd class="body-s">{copy.funding}</dd></div>
+    <div>
+      <dt class="label">Paper</dt>
+      <dd class="body-s"><a href={copy.paper.href}>{copy.paper.text}</a></dd>
+    </div>
+    <div>
+      <dt class="label">Built on</dt>
+      <dd class="body-s">{copy.builtOn.join(' · ')}</dd>
+    </div>
+    <div><dt class="label">Community</dt><dd class="body-s">{copy.community}</dd></div>
+  </dl>
+</section>
+
+<style>
+  .cred {
+    margin-top: var(--space-6);
+    display: grid;
+    gap: var(--space-4);
+  }
+  .cred dt { margin-bottom: var(--space-1); }
+  .cred dd { margin: 0; max-width: var(--measure); }
+  .cred a { color: var(--ink); }
+</style>

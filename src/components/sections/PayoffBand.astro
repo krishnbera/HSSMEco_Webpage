@@ -1,0 +1,46 @@
+---
+import SectionRule from '../SectionRule.astro';
+import type { z } from 'astro/zod';
+import type { siteCopySchema } from '../../schemas';
+
+interface Props { copy: z.infer<typeof siteCopySchema>['payoff'] }
+const { copy } = Astro.props;
+---
+<section id="payoff" class="container">
+  <SectionRule number="02" title="Payoff" />
+  <h2 class="display-l measure">{copy.heading}</h2>
+
+  <div class="payoff">
+    {copy.columns.map((col) => (
+      <div class="payoff__col" data-payoff-column>
+        <p class="body-l" data-claim="field">{col.field}</p>
+        <p class="body" data-claim="me">{col.me}</p>
+        <p class="label payoff__links">
+          {col.links.map((l, i) => (
+            <>{i > 0 && ' · '}<a href={l.href}>{l.label}</a></>
+          ))}
+        </p>
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  /* §6.2 of the content spec: two columns, EQUAL visual weight. The grid is
+     1fr 1fr precisely so neither role can be made to dominate by a later edit. */
+  .payoff {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-7);
+    margin-top: var(--space-5);
+  }
+  .payoff__col > * + * { margin-top: var(--space-3); }
+  .payoff__col [data-claim='field'] { color: var(--ink); }
+  .payoff__links a { color: var(--ink); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+  .payoff__links a:hover { text-decoration-thickness: 2px; }  /* weight, never hue (§4.6) */
+
+  /* Mobile: collapse to one column. 48em aligns with the tokens mobile type band. */
+  @media (max-width: 48em) {
+    .payoff { grid-template-columns: 1fr; gap: var(--space-6); }
+  }
+</style>
