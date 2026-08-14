@@ -24,7 +24,7 @@ const resolved = href?.startsWith('/') ? `${base}${href}` : href;
 const Tag = resolved ? 'a' : 'div';
 const interactive = resolved
   ? { href: resolved }
-  : { tabindex: '0', role: 'group', 'aria-labelledby': labelId };
+  : { tabindex: 0 as const, role: 'group' as const, 'aria-labelledby': labelId };
 ---
 <div class="hero-el__wrap">
   <Tag

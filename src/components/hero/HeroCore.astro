@@ -1,0 +1,24 @@
+---
+import HeroElement from './HeroElement.astro';
+import type { HeroElementData } from './types';
+
+const TILES = ['model-ddm', 'model-angle', 'model-race', 'model-attention', 'model-rlssm', 'model-contribute'] as const;
+const art = import.meta.glob<{ default: any }>('./art/tile-*.svg', { eager: true });
+const ART: Record<string, string> = {
+  'model-ddm': 'ddm', 'model-angle': 'angle', 'model-race': 'race',
+  'model-attention': 'attention', 'model-rlssm': 'rlssm', 'model-contribute': 'plus',
+};
+
+interface Props { elements: Record<string, HeroElementData> }
+const { elements } = Astro.props;
+---
+<div class="hero__core" data-hero-region="core">
+  {TILES.map((id) => {
+    const Art = art[`./art/tile-${ART[id]}.svg`].default;
+    return (
+      <HeroElement {...elements[id]}>
+        <Art />
+      </HeroElement>
+    );
+  })}
+</div>

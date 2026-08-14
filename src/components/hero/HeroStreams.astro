@@ -1,0 +1,26 @@
+---
+import HeroElement from './HeroElement.astro';
+import type { HeroElementData } from './types';
+
+const STREAMS = ['stream-behaviour', 'stream-neural', 'stream-gaze'] as const;
+const art = import.meta.glob<{ default: any }>('./art/stream-*.svg', { eager: true });
+const ART: Record<string, string> = {
+  'stream-behaviour': 'behaviour',
+  'stream-neural': 'neural',
+  'stream-gaze': 'gaze',
+};
+
+interface Props { elements: Record<string, HeroElementData> }
+const { elements } = Astro.props;
+---
+<div class="hero__streams" data-hero-region="streams">
+  {STREAMS.map((id) => {
+    const Art = art[`./art/stream-${ART[id]}.svg`].default;
+    return (
+      <HeroElement {...elements[id]}>
+        <Art />
+      </HeroElement>
+    );
+  })}
+  <HeroElement {...elements['return-insight']} />
+</div>

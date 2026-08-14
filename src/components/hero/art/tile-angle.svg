@@ -1,0 +1,7 @@
+<svg viewBox="0 0 64 40" fill="none" stroke="currentColor" stroke-width="1"
+     stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+  <!-- collapsing bounds: converge toward the right edge -->
+  <line x1="4" y1="4"  x2="60" y2="16" />
+  <line x1="4" y1="36" x2="60" y2="24" />
+  <path d="M4 20 L10 18 L15 22 L22 16 L28 20 L35 14 L42 17 L50 13 L56 15" />
+</svg>

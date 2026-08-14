@@ -69,3 +69,82 @@
 
 /* Reserving the payload's height in the flow means revealing it shifts nothing
    (future-features §1.2 constraint 3, and a pass-2 prerequisite). */
+
+/* --- desktop composition (content spec Appendix A) ---------------------- */
+
+.hero__figure { position: relative; margin-top: var(--space-7); }
+
+.hero__paths {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  color: var(--border-strong);
+  pointer-events: none;   /* the paths are decoration; the tiles take the pointer */
+}
+
+.hero__grid {
+  position: relative;
+  display: grid;
+  grid-template-areas: 'left centre right';
+  grid-template-columns: 1fr 1.6fr 1fr;   /* the core dominates; flanks are equal */
+  gap: var(--space-6);
+  align-items: center;
+}
+.hero__left { grid-area: left; }
+.hero__centre { grid-area: centre; }
+.hero__right { grid-area: right; }
+
+.hero__core {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-3);
+}
+
+/* §6.1: "a straight row of module tiles beneath the core, visually subordinate to it" */
+.hero__modules {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+}
+.hero__modules .hero-el { border-color: transparent; border-bottom-color: var(--border); }
+
+.hero__streams,
+.hero__contribution {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.hero__your-model {
+  display: grid;
+  place-items: center;
+  min-height: var(--space-9);
+  padding: var(--space-2);
+  border: 1px dashed var(--border);
+  color: var(--ink-muted);
+}
+
+.hero__artifact { margin: 0; color: var(--ink-faint); }
+
+.hero__caption { margin-top: var(--space-3); color: var(--ink-faint); }
+
+/* --- mobile composition (R9, decision E) --------------------------------
+   A DEFINED composition, not a squeezed desktop one: the same DOM, restacked
+   into one column so every R24 element id survives the breakpoint.
+   48em aligns with the tokens mobile type band. */
+
+@media (max-width: 48em) {
+  .hero__grid {
+    grid-template-areas: 'centre' 'left' 'right';
+    grid-template-columns: 1fr;
+    gap: var(--space-7);
+  }
+
+  /* The arrows described relationships between columns that no longer exist.
+     §6.1 permits the flanks to "degrade to captions" — the captions carry it. */
+  .hero__paths { display: none; }
+
+  .hero__core { grid-template-columns: repeat(2, 1fr); }
+  .hero__modules { grid-template-columns: repeat(2, 1fr); }
+}

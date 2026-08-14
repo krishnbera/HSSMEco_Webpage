@@ -1,0 +1,36 @@
+---
+import './hero.css';
+import HeroCore from './HeroCore.astro';
+import HeroModules from './HeroModules.astro';
+import HeroStreams from './HeroStreams.astro';
+import HeroContribution from './HeroContribution.astro';
+import Paths from './art/paths.svg';
+import type { HeroElementData } from './types';
+import type { z } from 'astro/zod';
+import type { siteCopySchema } from '../../schemas';
+
+interface Props {
+  copy: z.infer<typeof siteCopySchema>;
+  elements: Record<string, HeroElementData>;
+}
+const { copy, elements } = Astro.props;
+---
+<div class="hero__figure">
+  <Paths />
+  <div class="hero__grid">
+    <div class="hero__left">
+      <HeroStreams elements={elements} />
+      <p class="hero__caption caption">{copy.heroCaptions.left}</p>
+    </div>
+
+    <div class="hero__centre">
+      <HeroCore elements={elements} />
+      <HeroModules elements={elements} />
+    </div>
+
+    <div class="hero__right">
+      <HeroContribution elements={elements} />
+      <p class="hero__caption caption">{copy.heroCaptions.right}</p>
+    </div>
+  </div>
+</div>

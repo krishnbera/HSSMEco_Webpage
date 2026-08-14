@@ -1,0 +1,23 @@
+<svg class="hero__paths" viewBox="0 0 900 420" fill="none" stroke="currentColor"
+     stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+     aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+  <!-- three data streams converging into the core's left edge -->
+  <path d="M180 90  C240 90  260 170 320 190" />
+  <path d="M180 170 C250 170 260 185 320 195" />
+  <path d="M180 250 C240 250 260 220 320 205" />
+
+  <!-- insight return: exits the core's LOWER-LEFT edge and runs BENEATH the stream
+       panels, so it crosses no incoming arrow (content spec §6.1 design note;
+       decision G of the implementation plan) -->
+  <path data-hero-path="insight" data-route="below-streams"
+        d="M320 260 C250 300 200 320 120 320" />
+
+  <!-- contribution: your model -> trained artifact -> docks AT the "+" tile,
+       not at the wall generally (§6.1) -->
+  <path data-hero-path="contribution" data-docks-at="model-contribute"
+        d="M720 150 C650 150 620 175 585 185" />
+
+  <!-- adoption return -->
+  <path data-hero-path="adoption" data-route="right"
+        d="M585 235 C630 260 680 280 740 280" />
+</svg>

@@ -1,0 +1,20 @@
+---
+import HeroElement from './HeroElement.astro';
+import type { HeroElementData } from './types';
+
+const MODULES = [
+  'module-simulation',
+  'module-sbi',
+  'module-sampling',
+  'module-validation',
+  'module-plots',
+] as const;
+
+interface Props { elements: Record<string, HeroElementData> }
+const { elements } = Astro.props;
+---
+<div class="hero__modules" data-hero-region="modules">
+  {MODULES.map((id) => (
+    <HeroElement {...elements[id]} />
+  ))}
+</div>

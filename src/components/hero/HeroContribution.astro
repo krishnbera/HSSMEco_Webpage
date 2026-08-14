@@ -1,0 +1,19 @@
+---
+import HeroElement from './HeroElement.astro';
+import type { HeroElementData } from './types';
+
+interface Props { elements: Record<string, HeroElementData> }
+const { elements } = Astro.props;
+---
+{/*
+  Right flank counterpart to the core "+" tile (§6.1). Decorative only — the
+  addressable contribution element is model-contribute in the core. return-adoption
+  is the flank's single HeroElement.
+*/}
+<div class="hero__contribution" data-hero-region="contribution">
+  <div class="hero__your-model" aria-hidden="true">
+    <span class="hero__your-model-label label">Your model</span>
+  </div>
+  <p class="hero__artifact caption">trained once, shared</p>
+  <HeroElement {...elements['return-adoption']} />
+</div>
