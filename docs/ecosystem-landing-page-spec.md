@@ -1,6 +1,6 @@
 # HSSM Ecosystem Landing Page — Content & Design Spec
 
-**Version:** 2 (supersedes v1 of 2026-08-13; v1 remains in git history at commit `7d7ac97`)
+**Version:** 3 (supersedes v2 of 2026-08-13, commit `3bbe077`; v1 remains at `7d7ac97`)
 **Status:** Design approved — ready for copywriting and implementation planning
 **Last updated:** 2026-08-13
 **Scope:** Purpose, audience model, information architecture, section content, and visual direction. This document does **not** prescribe implementation technology or layout code.
@@ -8,6 +8,8 @@
 **Source material:** brainstorming sessions (2026-08-13); ecosystem preprint (`HSSM-preprint/HSSM_Ecosystem_paper.pdf`, local only); cloned repositories in `repos/` (`HSSM/`, `ssm-simulators/`, `LANfactory/`, local only); existing HSSM ecosystem docs (`repos/HSSM/docs/ecosystem/index.md`).
 
 **What changed in v2:** v1 was a faithful record of a good brainstorm, but it described a page that contradicted the owner's stated goal of a short, concise, direct pitch — 8 sections, ~1,200 words, 8 bespoke visual artifacts including custom interactive software. v2 sets a hard budget, resolves the blocking IA question v1 deferred, replaces three redundant sections with one worked example, and corrects a model-count claim that would not have survived scrutiny. Every reversal is recorded in Appendix B with its rationale.
+
+**What changed in v3:** two owner decisions taken during the technology evaluation reach back into content. The hero becomes **interactive** — elements reveal detail on hover, and carry links (§6.1a); this is within the v2 budget, which already exempted "links and hover states" from the zero-interactive-software rule, but it introduces copy that did not previously exist. And the **full model index is replaced by model families** (§13), which removes the generated-index requirement and, with it, the last remaining Python step from the build. Both changes are recorded in Appendix B.
 
 ---
 
@@ -217,7 +219,7 @@ A return path shows reach, captioned **"enable wider community adoption."**
 
 **Captions:** "bring data, gain insight" (left) · "bring a model, gain adoption" (right). Do not label the flanks with role names such as "THEORIST" / "ANALYST" — the captions do that work.
 
-**Interaction:** core model tiles are **clickable**, linking to the model index on the Ecosystem reference sub-page (§13). This is the entire surviving remnant of v1's model gallery section, and it gives the hero a job beyond decoration.
+**Interaction:** see §6.1a. Core model tiles are **clickable**, linking to the model families section of the Ecosystem reference sub-page (§13). This is the entire surviving remnant of v1's model gallery section, and it gives the hero a job beyond decoration.
 
 #### Design notes for production
 
@@ -226,6 +228,35 @@ A return path shows reach, captioned **"enable wider community adoption."**
 - Mobile: flanks stack beneath the core, or degrade to captions. The hero must have a defined mobile composition — this is a content decision, not an implementation detail, and v1 wrongly deferred it as the latter.
 - Thin line-art aesthetic; muted indigo/teal palette with one warm accent (orange) for the active tile and return paths.
 - Must work **without** animation. Optional later: tiles pulse as data arrives; a new tile docks periodically.
+
+---
+
+### 6.1a Hero interaction
+
+**New in v3.** The hero is the one interactive element on the page. This does not breach the §2 budget, which explicitly exempts links and hover states from the zero-bespoke-interactive-software rule — but it introduces copy and behaviour that v2 did not specify.
+
+**Goal:** let a curious visitor go deeper without lengthening the page. The hero carries more information than its ~35 words can state; interaction is how that surplus becomes reachable without spending budget on it.
+
+#### What each element does
+
+| Element | On hover/focus | On activation |
+|---|---|---|
+| **Model tile** (×~6) | Reveals the model family name and a one-line description | Links to that family on the Ecosystem reference sub-page (§13) |
+| **Empty "+" tile** | Reveals the contribution invitation | Links to the contribution path (§6.4 / contribution guide) |
+| **Module tile** (simulation · SBI · sampling · validation · plots) | Reveals which package owns it and what it does in one line | Links to that package's documentation |
+| **Data stream** (behaviour · neural · eye-tracking) | Reveals a one-line statement of how that modality enters the model | — |
+| **Return paths** (insight · adoption) | Reveals a one-line cash-out, per the §4 governing content rule | — |
+
+#### Hard constraints
+
+1. **Nothing is hover-only.** Every hover-revealed payload must also be reachable by keyboard focus and by tap. Hover-only content is invisible to keyboard users and to every mobile visitor, and fails WCAG 2.1 SC 1.4.13. This is a content constraint, not just an implementation one: if a payload cannot be reached three ways, it does not go in the hero.
+2. **The hero must be complete without interaction.** Consistent with v2 §8's screenshot test — hover payloads are *supplementary*, never the only place something is said. Nothing required to understand the pitch may live behind an interaction.
+3. **Payloads are one line.** A hover that opens a paragraph is a section in disguise and breaks the budget.
+4. **Mobile has a defined behaviour**, decided alongside the mobile composition (§6.1). Tap-to-reveal and link-through compete for the same gesture; that conflict must be resolved in the design, not discovered in the build.
+
+#### Word budget
+
+Hover payloads are **excluded** from the ~550-word body count — they are not body copy and are not read linearly. They carry their own budget: **~120 words total** across all elements. Exceeding it means the hero is doing a section's job.
 
 ---
 
@@ -479,6 +510,10 @@ Every number on the page must be verifiable against a source of truth. Verified 
 | Subline final wording | Copy | Choose alongside tagline |
 | Worked-example dataset | Content | Confirm `cavanagh_theta` supports the panel 0–3 narrative |
 | Hero production artwork | Design | Fix return-arrow crossing; decide ring vs. row; define mobile composition |
+| **Hero hover payloads** | Copy | New in v3 (§6.1a). Every element in the table needs its one-line payload written. ~120 words total, excluded from the body budget |
+| **Hero mobile interaction** | Design | New in v3 (§6.1a). Tap-to-reveal and tap-to-follow-link compete for one gesture; resolve in design, not in the build |
+| **Model families copy** | Copy | New in v3 (§13). Four families, one line each, labelled as a selection rather than a catalogue |
+| **Upstream: model-listing pages** | Infra | New in v3 (§13). Neither HSSM nor `ssm-simulators` publishes a browsable model list, so this page has no canonical target to link out to. Recommend adding one to each, generated from the registry. Same class of upstream fix as the stale citation in §10 |
 | Copy pass | Copy | All section copy is currently direction, not final text |
 | HSSMSpine coordination | Infra | Ownership transfer and redirect from `HSSM/ecosystem/` |
 | URL / hosting | Infra | Domain and deployment target |
@@ -516,10 +551,29 @@ Every number on the page must be verifiable against a source of truth. Verified 
 
 **Additions:**
 
-- Full model index, generated from the registry rather than hand-curated, and the link target for the hero's clickable tiles
+- **Model families** — the link target for the hero's clickable tiles. See below.
 - Auxiliary repositories (`LAN_pipeline_minimal`; future HSSMCortex, HSSMeister, HSSMSpine coordination)
 
 **Linked from:** §6.4 (once), and the footer.
+
+### Model families, not a model index
+
+**Changed in v3.** v2 specified "a full model index, generated from the registry rather than hand-curated." That is replaced by a short, hand-written description of **model families**, supplemented by links out to the packages for the exhaustive lists.
+
+**Rationale.** A generated index was proposed to make model breadth tangible without hand-maintenance. But §9 already commits this page to naming *families, never numbers*, and §10 records why: "113 registered simulator configurations" and "16 models fittable by name" are different quantities, and a visitor who conflates them loses trust at exactly the wrong moment. An exhaustive index invites the same conflation by enumeration rather than by count. Families are also stable — they do not go stale between releases, and they need no build-time audit.
+
+**Content.** The families already named in §6.5: diffusion variants, race and LBA/LCA accumulators, attention models, and reinforcement-learning SSMs — each with a one-line description and a link onward.
+
+**Honesty constraint.** The list must read as **a selection, not a catalogue.** Label it so, and make the "for the complete list, see…" link prominent rather than a footnote. This is the same discipline §10 applies to numbers, extended to enumeration.
+
+**Link targets — and an upstream gap.** Verified 2026-08-13 against the local clones: **neither package currently publishes a browsable list of models.**
+
+| Package | What exists | What does not |
+|---|---|---|
+| HSSM | `hssm.modelconfig.list_models()` (`src/hssm/modelconfig/__init__.py:40`); `hssm.show_defaults` API page | No docs page enumerating supported models |
+| ssm-simulators | `ssms.config` API page; "Configuration systems" and "What ssm-simulators can do" tutorials | No docs page enumerating available simulators |
+
+Until that changes, link to the closest existing targets — the configuration tutorials and the `show_defaults` / `config` API pages — and state plainly what they are. **Recommended upstream fix:** a generated model-listing page in the HSSM and `ssm-simulators` docs, which is where that content belongs and where it can be generated from the registry cheaply. Tracked in §11.
 
 ---
 
@@ -588,6 +642,18 @@ Every number on the page must be verifiable against a source of truth. Verified 
 ---
 
 ## Appendix B: Decisions log
+
+### v3 decisions
+
+| Decision | Choice | Rationale |
+|---|---|---|
+| Hero interaction | Elements reveal detail on hover/focus/tap; tiles and modules carry links (§6.1a) | Owner; lets the hero carry more than its ~35 words without lengthening the page. Already permitted by the §2 budget, which exempts links and hover states |
+| Hover accessibility | Nothing is hover-only; every payload reachable three ways | WCAG 2.1 SC 1.4.13. Treated as a *content* constraint — a payload that cannot be reached three ways does not go in the hero |
+| Hover budget | ~120 words, excluded from the ~550-word body count | Hover payloads are not read linearly, but they still need a ceiling or the hero becomes a section |
+| Hero completeness | Must remain complete without interaction | Extends v2 §8's screenshot test to interaction |
+| Model index | Replaced by **model families** plus links out (§13) | Owner; a small demonstrative list. An exhaustive index invites the same conflation §10 dropped numbers to avoid — 113 simulator configs vs 16 fittable by name |
+| Index honesty | Must read as a selection, not a catalogue | Extends §10's claim discipline from numbers to enumeration |
+| Upstream model lists | Recommend HSSM and `ssm-simulators` each publish a generated model-listing page | Verified 2026-08-13: neither does, so this page has no canonical link target |
 
 ### v2 decisions
 

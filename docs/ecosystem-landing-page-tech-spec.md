@@ -1,6 +1,7 @@
 # HSSM Ecosystem Landing Page — Technical Specification
 
 **Version:** 3 (supersedes v2 of 2026-08-13, commit `1880ba2`; the v1 scaffold is at `df45898`)
+**Companion content spec:** v3 — this document's C11 and C12 are reflected there as §6.1a and §13.
 **Status:** Stack and hosting decided. **D1, D2, D4, D5, D6, D9, D10, D11 are CLOSED. D3 (animation) and D7 (instrumentation) remain OPEN by decision. D8 (asset pipeline) is deferred to pass 2, except the hero's structure.**
 **Last updated:** 2026-08-13
 **Companion to:** [`ecosystem-landing-page-spec.md`](ecosystem-landing-page-spec.md) (v2 — content and design) · [`ecosystem-landing-page-future-features.md`](ecosystem-landing-page-future-features.md) (backlog)
@@ -76,7 +77,7 @@ Constraints, not preferences. A stack that cannot meet them is disqualified rega
 |---|---|---|
 | R6 | **Four substantial bespoke visuals**, inlined as SVG or markup. Inlining is mandatory — an `<img>` is a sealed box that page CSS cannot theme and page JS cannot address. | v2 §8; D5; C11 |
 | R7 | **REVISED — see §3.5.** Artwork must stay editable in source, where "source" differs by visual type. | v2 §6.1; future-features §1.2 |
-| R8 | Hero model tiles must be **clickable links** into the model index. | v2 §6.1 |
+| R8 | Hero model tiles must be **clickable links** into the model families section of the reference sub-page. Module tiles, the "+" tile, streams, and return paths carry their own hover payloads and, where listed, links — see v3 §6.1a for the full element table. | v3 §6.1, §6.1a |
 | R9 | The hero needs a **defined mobile composition** — flanks stack beneath the core or degrade to captions. Not a post-hoc responsive fix. | v2 §6.1 |
 | R10 | **Animation-ready but static-first.** Every visual must communicate fully in a screenshot; `prefers-reduced-motion` must fall back to static. | v2 §8; future-features §1.2 |
 | R22 | **The hero reveals detail on interaction.** Hovering an element surfaces additional information about it. | C11 |
@@ -92,7 +93,8 @@ Constraints, not preferences. A stack that cannot meet them is disqualified rega
 | R11 | One **syntax-highlighted Python code block**, three lines. | v2 §6.3 |
 | ~~R12~~ | ~~The model index is generated from the `ssm-simulators` registry.~~ **VOID — see §3.6.** | C12 |
 | R13 | No **model counts** anywhere in the build output. If reintroduced they must be generated at build time, never hand-written. | v2 §10 |
-| R25 | **The model index must read as a selection, not a catalogue.** Because it is hand-curated (C12), its labelling must not imply exhaustiveness. | v2 §10; C12 |
+| R25 | **Model families, not a model index.** The reference sub-page describes ~4 families with one line each and links out for the exhaustive lists. It must read as a selection, not a catalogue. | v3 §13; C12 |
+| R26 | **The outbound link targets do not yet exist.** Neither HSSM nor `ssm-simulators` publishes a browsable model list (verified 2026-08-13). Link to the closest existing targets and state plainly what they are, until the upstream pages land. | v3 §13, §11 |
 
 ### 3.4 Quality bars
 
@@ -211,7 +213,7 @@ Plus: contributors edit Markdown and YAML and never touch Node (R16, C6), and th
 
 | Collection | Authoring | Notes |
 |---|---|---|
-| **Model index** | Hand-curated YAML, one entry per model | Small and demonstrative (C12). Must be labelled as a selection (R25). Link target for the hero's clickable tiles (R8) |
+| **Model families** | Hand-curated YAML, one entry per family (~4) | Diffusion variants, race and LBA/LCA accumulators, attention models, RLSSMs. Must be labelled as a selection (R25). Link target for the hero's clickable tiles (R8), and the source of their hover payloads (v3 §6.1a) |
 | **Domain showcase** (future-features §1.1) | Hand-authored YAML, one file per entry, PR-contributed | The scverse contribution model — schema-validated, submitted by PR |
 | **Capability grid** (v2 §6.5) | Hand-authored YAML | |
 
@@ -365,13 +367,16 @@ Recorded so they are not re-proposed without new rationale.
 
 | Dependency | Where it lives | Blocks |
 |---|---|---|
-| **Content spec §13 conflict** — "model index, generated from the registry" is contradicted by C12 | v2 §13 | Nothing technical; the content spec needs a matching revision |
-| Domain name, and institutional registration of it | v2 §1, §11; D2 | Launch, and R21 |
-| HSSMSpine content ownership handoff | v2 §1, §11 | The reference page's content migration |
-| Final tagline and subline | v2 §7, §11 | Copy |
-| Hero mobile composition | v2 §6.1, §11 | R9; informs the hero component structure |
-| Hero hover content — *what* each element reveals | New, from C11 | R22; this is a content decision the content spec does not yet cover |
-| Worked-example dataset confirmation | v2 §11 | D8 at pass 2 |
+| ~~Content spec §13 conflict~~ | v3 §13 | **Resolved.** The content spec now specifies model families plus links out |
+| ~~Hero hover content~~ | v3 §6.1a | **Resolved structurally** — the element table exists. The individual payload copy is now tracked in v3 §11 |
+| Domain name, and institutional registration of it | v3 §1, §11; D2 | Launch, and R21 |
+| HSSMSpine content ownership handoff | v3 §1, §11 | The reference page's content migration |
+| Hero hover payload copy | v3 §11 | R22; blocks hero implementation |
+| Hero mobile interaction (tap-to-reveal vs tap-to-follow) | v3 §11 | R9, R23; a design decision, not an implementation one |
+| Upstream model-listing pages in HSSM and `ssm-simulators` | v3 §11, §13 | R26 — the outbound links are weak until these exist |
+| Final tagline and subline | v3 §7, §11 | Copy |
+| Hero mobile composition | v3 §6.1, §11 | R9; informs the hero component structure |
+| Worked-example dataset confirmation | v3 §11 | D8 at pass 2 |
 
 ---
 
