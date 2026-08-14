@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 240" role="img">
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="240" viewBox="0 0 560 240" role="img">
   <title>Placeholder: two posterior densities</title>
   <rect width="560" height="240" fill="#FCFBF8"/>
-  <text x="24" y="36" font-family="JetBrains Mono, monospace" font-size="12" fill="#706B63">PLACEHOLDER · panel 2 · the answer</text>
+  <text x="24" y="36" font-family="JetBrains Mono, monospace" font-size="12" fill="#706B63">PLACEHOLDER - panel 2 - the answer</text>
   <path d="M60 200 C 90 40, 150 40, 180 200" fill="none" stroke="#3730A3" stroke-width="2"/>
   <path d="M320 200 C 360 80, 420 80, 460 200" fill="none" stroke="#0D9488" stroke-width="2"/>
   <line x1="40" y1="200" x2="520" y2="200" stroke="#E5E1D8"/>

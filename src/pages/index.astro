@@ -4,6 +4,7 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ThemeToggle from '../components/ThemeToggle.astro';
 import PayoffBand from '../components/sections/PayoffBand.astro';
+import WorkedExample from '../components/sections/WorkedExample.astro';
 import FourStepChain from '../components/sections/FourStepChain.astro';
 import CapabilityGrid from '../components/sections/CapabilityGrid.astro';
 import Credibility from '../components/sections/Credibility.astro';
@@ -20,6 +21,7 @@ const capabilities = await getCollection('capabilities');
   <p class="container body-l measure">{copy.subline}</p>
 
   <PayoffBand copy={copy.payoff} />
+  <WorkedExample copy={copy.workedExample} />
   <FourStepChain copy={copy.chain} />
   <CapabilityGrid items={capabilities} copy={copy.capabilities} />
   <Credibility copy={copy.credibility} />

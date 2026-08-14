@@ -1,0 +1,120 @@
+---
+import SectionRule from '../SectionRule.astro';
+import Plate from '../Plate.astro';
+import { Code } from 'astro:components';
+import type { z } from 'astro/zod';
+import type { siteCopySchema } from '../../schemas';
+
+interface Props { copy: z.infer<typeof siteCopySchema>['workedExample'] }
+const { copy } = Astro.props;
+
+const figures = import.meta.glob<{ default: ImageMetadata }>(
+  '../../assets/figures/panel-*',
+  { eager: true },
+);
+const src = (name: string) => {
+  const hit = Object.entries(figures).find(([k]) => k.includes(name));
+  if (!hit) throw new Error(`missing figure ${name}`);
+  return hit[1].default;
+};
+
+// The only code on the page (R11, content spec §2): three lines, verbatim from §6.3.
+const snippet = `import hssm
+model = hssm.HSSM(data=my_data, model="ddm")
+model.sample()`;
+
+const [p0, p1, p2, p3] = copy.panels;
+const fig0 = src('panel-0-problem');
+const fig2 = src('panel-2-posteriors');
+const fig3 = src('panel-3-ppc');
+---
+<section id="worked-example" class="container">
+  <SectionRule number="03" title="Worked example" />
+  <h2 class="display-l measure">{copy.heading}</h2>
+  <p class="body-l measure">{copy.intro}</p>
+
+  <Plate
+    figure={1}
+    title="A hierarchical drift-diffusion model fitted to Cavanagh and Frank frontal theta data."
+    desc={
+      "Four panels in sequence. First, response-time densities for high- and low-conflict "
+      + "trials whose means are nearly identical but whose shapes differ. Second, the three "
+      + "lines of code that specify the model, with a mixed-effects formula placing the "
+      + "conflict effect on boundary separation. Third, posterior densities for the conflict "
+      + "coefficient on boundary separation and on drift rate: the boundary separation "
+      + "posterior is shifted away from zero while the drift rate posterior is centred on it. "
+      + "Fourth, posterior predictive densities laid over the observed response times, "
+      + "matching in both conditions."
+    }
+    caption={
+      "Reading left to right: the problem, the model, the answer, the check. Colour encodes "
+      + "the two conflict conditions, which are also separated by position and by direct "
+      + "labelling."
+    }
+  >
+    <div class="panels">
+      <div class="panel" data-panel="0">
+        <p class="label">{p0.title}</p>
+        <img src={fig0.src} width={fig0.width || 560} height={fig0.height || 240} alt="" />
+        <p class="caption" data-panel-caption>{p0.caption}</p>
+      </div>
+
+      <div class="panel" data-panel="1">
+        <p class="label">{p1.title}</p>
+        <div class="panel__code">
+          <Code code={snippet} lang="python" themes={{ light: 'github-light', dark: 'github-light' }} />
+          <p class="caption" data-formula-chip>{copy.formulaChip}</p>
+        </div>
+        <p class="caption" data-panel-caption>{p1.caption}</p>
+      </div>
+
+      <div class="panel" data-panel="2">
+        <p class="label">{p2.title}</p>
+        <img src={fig2.src} width={fig2.width || 560} height={fig2.height || 240} alt="" />
+        <p class="caption" data-panel-caption>{p2.caption}</p>
+      </div>
+
+      <div class="panel" data-panel="3">
+        <p class="label">{p3.title}</p>
+        <img src={fig3.src} width={fig3.width || 560} height={fig3.height || 240} alt="" />
+        <p class="caption" data-panel-caption>{p3.caption}</p>
+      </div>
+    </div>
+  </Plate>
+
+  <p class="body-s measure" data-recovery>
+    {copy.recovery.text} <a href={copy.recovery.href}>See parameter recovery →</a>
+  </p>
+</section>
+
+<style>
+  .panels {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-6) var(--space-5);
+    /* §6.2: the plate is the one place centring is allowed, but the panels'
+       own text is still flush left. */
+    text-align: left;
+  }
+  .panel { display: grid; gap: var(--space-2); align-content: start; }
+  .panel :global(svg) { width: 100%; height: auto; }
+  /* SVG-as-<img> often reports 0 natural height in Chromium; keep the plate ratio. */
+  .panel img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 560 / 240;
+    background: var(--plate);
+  }
+
+  .panel__code :global(pre) {
+    background: var(--surface-sunken);
+    padding: var(--space-3);
+    margin: 0;
+    overflow-x: auto;
+    font-family: var(--font-mono);
+    font-size: var(--text-caption);
+  }
+
+  /* 48em aligns with the tokens mobile type band. */
+  @media (max-width: 48em) { .panels { grid-template-columns: 1fr; } }
+</style>

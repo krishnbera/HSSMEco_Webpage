@@ -44,5 +44,7 @@ export function sourceStyleFiles() {
   return walk(join(process.cwd(), 'src'))
     .map((p) => p.replace(process.cwd() + '/', ''))
     .filter((p) => !ALLOW.includes(p))
+    // §2: colour appears only inside figures — those assets are out of chrome scope.
+    .filter((p) => !p.startsWith('src/assets/figures/'))
     .map((path) => ({ path, text: readFileSync(join(process.cwd(), path), 'utf-8') }));
 }

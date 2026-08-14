@@ -8,6 +8,7 @@ import PayoffBand from '../src/components/sections/PayoffBand.astro';
 import Credibility from '../src/components/sections/Credibility.astro';
 import FourStepChain from '../src/components/sections/FourStepChain.astro';
 import CapabilityGrid from '../src/components/sections/CapabilityGrid.astro';
+import WorkedExample from '../src/components/sections/WorkedExample.astro';
 
 const copy = siteCopySchema.parse(
   load(readFileSync(join(process.cwd(), 'src/content/copy/site.yaml'), 'utf-8')),
@@ -148,6 +149,52 @@ describe('CapabilityGrid reads as a selection, not a catalogue (R25, §10)', () 
     const doc = await renderComponent(CapabilityGrid, { props });
     for (const svg of doc.querySelectorAll('[data-capability] svg')) {
       expect(svg.getAttribute('aria-hidden')).toBe('true');
+    }
+  });
+});
+
+describe('WorkedExample carries the primary success criterion (§6.3)', () => {
+  const props = { copy: copy.workedExample };
+
+  it('renders four panels in order', async () => {
+    const doc = await renderComponent(WorkedExample, { props });
+    const panels = [...doc.querySelectorAll('[data-panel]')];
+    expect(panels.map((p) => p.getAttribute('data-panel'))).toEqual(['0', '1', '2', '3']);
+  });
+
+  it('carries exactly one code block, of exactly three lines (R11, §2)', async () => {
+    const doc = await renderComponent(WorkedExample, { props });
+    const blocks = doc.querySelectorAll('pre code');
+    expect(blocks).toHaveLength(1);
+    const lines = blocks[0].textContent!.trim().split('\n').filter((l) => l.trim());
+    expect(lines).toHaveLength(3);
+    expect(lines[0]).toBe('import hssm');
+  });
+
+  it('shows the formula chip alongside the snippet (§6.3)', async () => {
+    const doc = await renderComponent(WorkedExample, { props });
+    expect(doc.querySelector('[data-formula-chip]')?.textContent)
+      .toContain('(1|participant_id)');
+  });
+
+  it('answers the trust objection twice — panel 3 visually, recovery in one sentence', async () => {
+    const doc = await renderComponent(WorkedExample, { props });
+    expect(doc.querySelector('[data-panel="3"]')).not.toBeNull();
+    const recovery = doc.querySelector('[data-recovery]')!;
+    expect(recovery.textContent).toMatch(/parameter recovery/i);
+    expect(recovery.querySelector('a')).not.toBeNull();
+  });
+
+  it('is one plate with one figure number, not four (§7.1)', async () => {
+    const doc = await renderComponent(WorkedExample, { props });
+    expect(doc.querySelectorAll('figure.plate')).toHaveLength(1);
+    expect(doc.querySelector('figcaption')!.textContent).toContain('Figure 1.');
+  });
+
+  it('gives every panel caption an encoding, not just a subject (§7.2)', async () => {
+    const doc = await renderComponent(WorkedExample, { props });
+    for (const cap of doc.querySelectorAll('[data-panel-caption]')) {
+      expect(cap.textContent!.trim().split(/\s+/).length).toBeGreaterThan(8);
     }
   });
 });
