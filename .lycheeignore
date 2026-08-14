@@ -1,0 +1,4 @@
+# doi.org resolvers habitually 403 automated checkers; real DOI targets are stable
+https://doi.org/.*
+# huggingface.co rate-limits unauthenticated automated requests
+https://huggingface.co/.*

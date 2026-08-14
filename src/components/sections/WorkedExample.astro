@@ -106,13 +106,20 @@ const fig3 = src('panel-3-ppc');
     background: var(--plate);
   }
 
+  /* Shiki's github-light theme inlines keyword colours that fail WCAG AA on
+     white. Beat those inline styles so the three-line snippet stays on design
+     tokens — R14 is a CI gate, not a theme negotiation. */
   .panel__code :global(pre) {
-    background: var(--surface-sunken);
+    background: var(--surface-sunken) !important;
+    color: var(--ink) !important;
     padding: var(--space-3);
     margin: 0;
     overflow-x: auto;
     font-family: var(--font-mono);
     font-size: var(--text-caption);
+  }
+  .panel__code :global(pre span) {
+    color: inherit !important;
   }
 
   /* 48em aligns with the tokens mobile type band. */

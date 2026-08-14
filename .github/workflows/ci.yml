@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc     # R18: pinned runtime
+          cache: npm
+
+      # R18: reproducible install against the committed lockfile. A contributor's
+      # copy-edit PR must never fail for reasons unrelated to their change.
+      - run: npm ci
+
+      # Includes `astro check`, which is where the D4 collection schemas are enforced.
+      - name: Build
+        run: npm run build
+
+      # Runs after the build because tests/build/*.test.ts read ./dist.
+      - name: Tests
+        run: npm test
+
+      # R19 — the primary way this site silently degrades.
+      - name: Link integrity
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: >-
+            --cache --max-cache-age 1d --no-progress
+            './dist/**/*.html' './docs/**/*.md' 'README.md'
+          fail: true
+
+      # R14 (accessibility = 1.0) and R17 (performance budget).
+      - name: Lighthouse
+        run: npx --yes @lhci/cli@0.15.1 autorun
