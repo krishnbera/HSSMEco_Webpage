@@ -1,0 +1,37 @@
+---
+import './hero.css';
+
+interface Props {
+  /** Stable across pass 1 and pass 2. Changing it breaks the R24 animation contract. */
+  id: string;
+  kind: 'model' | 'contribute' | 'module' | 'stream' | 'return';
+  label: string;
+  /** One line (§6.1a). Always rendered — visibility is CSS's problem, presence is not. */
+  payload: string;
+  href?: string;
+  active?: boolean;
+}
+const { id, kind, label, payload, href, active = false } = Astro.props;
+const payloadId = `hero-payload-${id}`;
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const resolved = href?.startsWith('/') ? `${base}${href}` : href;
+
+// Linked elements are anchors; unlinked ones still take focus, because R23 makes
+// keyboard reach non-negotiable even where there is nowhere to go.
+const Tag = resolved ? 'a' : 'div';
+const interactive = resolved ? { href: resolved } : { tabindex: '0', role: 'group' };
+---
+<div class="hero-el__wrap">
+  <Tag
+    class:list={['hero-el', `hero-el--${kind}`, { 'is-active': active }]}
+    data-hero-el={id}
+    data-hero-kind={kind}
+    aria-describedby={payloadId}
+    {...interactive}
+  >
+    <span class="hero-el__art" data-hero-art aria-hidden="true"><slot /></span>
+    <span class="hero-el__label label">{label}</span>
+  </Tag>
+  <p class="hero-el__payload caption" id={payloadId} data-hero-payload>{payload}</p>
+</div>

@@ -1,0 +1,71 @@
+/*
+  Hover / focus / tap parity — tech spec R23, content spec §6.1a, WCAG 2.1 SC 1.4.13.
+
+  Three rules hold this together, and breaking any one ships hover-only content:
+    1. the payload is always in the DOM; only its visibility is conditional
+    2. :hover and :focus-visible appear in the SAME selector list, always
+    3. on a touch pointer the payload is simply visible — no tap gesture is consumed,
+       so tap follows the link (decision D of the implementation plan)
+
+  tests/hero.test.ts fails the build if rule 2 or 3 is broken.
+*/
+
+.hero-el__wrap { position: relative; display: grid; gap: var(--space-1); }
+
+.hero-el {
+  display: grid;
+  gap: var(--space-2);
+  justify-items: start;
+  padding: var(--space-2);
+  border: 1px solid var(--border);
+  color: var(--ink-muted);
+  text-decoration: none;
+  background: transparent;
+}
+
+/* State by weight and background, never by hue (§4.6). No transform (§10.2). */
+.hero-el:hover,
+.hero-el:focus-visible {
+  background: var(--surface);
+  border-color: var(--border-strong);
+  color: var(--ink);
+}
+
+/* §6.1: one tile is highlighted as the model currently in use. On a monochrome
+   page that is a heavier rule, not a warm accent. */
+.hero-el.is-active { border-color: var(--ink); border-width: 1.5px; }
+
+.hero-el--contribute { border-style: dashed; }
+
+.hero-el__art { display: block; width: 100%; color: var(--ink); }
+.hero-el__label { color: inherit; }
+
+/* --- the payload -------------------------------------------------------- */
+
+.hero-el__payload {
+  /* Present, not painted. `visibility` rather than `display:none` keeps it in the
+     accessibility tree for aria-describedby while hiding it visually. */
+  visibility: hidden;
+  min-height: calc(var(--text-caption) * var(--lh-caption) * 2);
+  margin: 0;
+}
+
+.hero-el__wrap:hover .hero-el__payload,
+.hero-el__wrap:focus-within .hero-el__payload {
+  visibility: visible;
+}
+
+/*
+  Touch pointers: reveal permanently.
+
+  Tap-to-reveal and tap-to-follow-link compete for one gesture (content spec §11).
+  Rather than arbitrating, we remove the conflict: on touch the payload is always
+  visible, so the single tap always means "follow the link". This is also the third
+  of R23's three reachability paths, and it needs no JavaScript.
+*/
+@media (hover: none) {
+  .hero-el__payload { visibility: visible; }
+}
+
+/* Reserving the payload's height in the flow means revealing it shifts nothing
+   (future-features §1.2 constraint 3, and a pass-2 prerequisite). */
