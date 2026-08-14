@@ -1,4 +1,5 @@
 ---
+import Font from 'astro/components/Font.astro';
 import '../styles/tokens.css';
 import '../styles/base.css';
 
@@ -22,6 +23,9 @@ const canonical = new URL(canonicalPath.replace(/^\//, ''), canonicalBase).href;
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
+    <Font cssVariable="--font-display" preload />
+    <Font cssVariable="--font-text" preload />
+    <Font cssVariable="--font-mono" preload />
     <slot name="head" />
   </head>
   <body>
