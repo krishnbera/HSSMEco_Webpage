@@ -1,0 +1,32 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  /** Route-relative path, e.g. '/' or '/ecosystem/'. Passed explicitly rather than
+      read from Astro.url so the canonical URL is identical in production and in a
+      PR preview, which serves the same page from a deeper path prefix. */
+  canonicalPath: string;
+}
+const { title, description, canonicalPath } = Astro.props;
+const canonical = new URL(canonicalPath.replace(/^\//, ''), Astro.site).href;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <slot name="head" />
+  </head>
+  <body>
+    <header><slot name="header" /></header>
+    <main><slot /></main>
+    <footer>
+      <slot name="footer">
+        <p class="caption">HSSM ecosystem — footer placeholder. Links to follow.</p>
+      </slot>
+    </footer>
+  </body>
+</html>
