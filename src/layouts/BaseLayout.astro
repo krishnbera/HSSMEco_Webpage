@@ -20,6 +20,14 @@ const canonical = new URL(canonicalPath.replace(/^\//, ''), canonicalBase).href;
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script is:inline>
+      // Applies the stored preference before first paint (§9.3). Without an explicit
+      // choice we fall through to the prefers-color-scheme media query in tokens.css.
+      try {
+        var t = localStorage.getItem('hssm-theme');
+        if (t === 'dark' || t === 'light') document.documentElement.dataset.theme = t;
+      } catch (e) { /* private mode: fall through to the system preference */ }
+    </script>
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />

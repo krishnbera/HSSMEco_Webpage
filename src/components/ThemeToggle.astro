@@ -1,0 +1,45 @@
+---
+// No props. State lives on <html data-theme> and in localStorage.
+---
+<button id="theme-toggle" type="button" class="label" aria-pressed="false" aria-label="Use dark theme">
+  <span data-theme-label>Dark</span>
+</button>
+
+<script>
+  const btn = document.getElementById('theme-toggle')!;
+  const root = document.documentElement;
+
+  const isDark = () =>
+    root.dataset.theme
+      ? root.dataset.theme === 'dark'
+      : matchMedia('(prefers-color-scheme: dark)').matches;
+
+  function sync() {
+    const dark = isDark();
+    btn.setAttribute('aria-pressed', String(dark));
+    btn.setAttribute('aria-label', dark ? 'Use light theme' : 'Use dark theme');
+    btn.querySelector('[data-theme-label]')!.textContent = dark ? 'Light' : 'Dark';
+  }
+
+  btn.addEventListener('click', () => {
+    const next = isDark() ? 'light' : 'dark';
+    root.dataset.theme = next;
+    try { localStorage.setItem('hssm-theme', next); } catch { /* ignore */ }
+    sync();
+  });
+
+  sync();
+</script>
+
+<style>
+  /* §4.6: state is never conveyed by hue. Weight and background only. */
+  #theme-toggle {
+    background: transparent;
+    border: 1px solid var(--border-strong);
+    color: var(--ink-muted);
+    padding: var(--space-2) var(--space-3);
+    cursor: pointer;
+  }
+  #theme-toggle:hover { background: var(--surface); color: var(--ink); }
+  #theme-toggle[aria-pressed='true'] { font-weight: 500; }
+</style>

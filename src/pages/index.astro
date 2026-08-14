@@ -1,10 +1,12 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import ThemeToggle from '../components/ThemeToggle.astro';
 ---
 <BaseLayout
   title="HSSM Ecosystem"
   description="Open Python tools for fitting neurocognitive process models to behaviour, neural, and eye-tracking data."
   canonicalPath="/"
 >
-  <h1>HSSM Ecosystem</h1>
+  <div slot="header" class="container"><ThemeToggle /></div>
+  <h1 class="display-xl">HSSM Ecosystem</h1>
 </BaseLayout>
