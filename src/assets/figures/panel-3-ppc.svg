@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 240" role="img">
+  <title>Placeholder: posterior predictive overlay</title>
+  <rect width="560" height="240" fill="#FCFBF8"/>
+  <text x="24" y="36" font-family="JetBrains Mono, monospace" font-size="12" fill="#706B63">PLACEHOLDER · panel 3 · the check</text>
+  <path d="M40 200 C 100 50, 200 50, 280 200 S 460 200, 520 200" fill="none" stroke="#2947C4" stroke-width="2"/>
+  <path d="M40 200 C 110 70, 210 70, 280 200 S 450 190, 520 200" fill="none" stroke="#14130F" stroke-width="1" stroke-dasharray="4 3"/>
+  <line x1="40" y1="200" x2="520" y2="200" stroke="#E5E1D8"/>
+</svg>

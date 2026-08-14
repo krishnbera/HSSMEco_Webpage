@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 240" role="img">
+  <title>Placeholder: two overlapping response-time densities</title>
+  <rect width="560" height="240" fill="#FCFBF8"/>
+  <text x="24" y="36" font-family="JetBrains Mono, monospace" font-size="12" fill="#706B63">PLACEHOLDER · panel 0 · the problem</text>
+  <path d="M40 200 C 80 40, 160 40, 200 200" fill="none" stroke="#3730A3" stroke-width="2"/>
+  <path d="M80 200 C 140 60, 240 60, 280 200" fill="none" stroke="#0D9488" stroke-width="2"/>
+  <line x1="40" y1="200" x2="520" y2="200" stroke="#E5E1D8"/>
+</svg>
