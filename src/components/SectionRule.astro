@@ -1,0 +1,17 @@
+---
+interface Props { number: string; title: string }
+const { number, title } = Astro.props;
+---
+<div class="section-rule">
+  <p class="label">§ {number} — {title}</p>
+</div>
+
+<style>
+  /* §6.3: heavy rule opens a section; the hairline (1px --border) subdivides within
+     one. The distinction is what makes six sections read as six. */
+  .section-rule {
+    border-top: 1.5px solid var(--ink);
+    padding-top: var(--space-3);
+    margin-bottom: var(--space-6);
+  }
+</style>

@@ -1,0 +1,24 @@
+---
+import '../styles/plate.css';
+
+interface Props {
+  figure: number;
+  title: string;       // what the figure shows — becomes <title>
+  desc: string;        // how to read it — becomes <desc>, the long text alternative
+  caption: string;     // the visible caption; states the encoding, not the subject (§7.2)
+  fullBleed?: boolean; // §9.2: ignored in dark mode, where plates never run full-bleed
+}
+const { figure, title, desc, caption, fullBleed = false } = Astro.props;
+const titleId = `plate-${figure}-title`;
+const descId = `plate-${figure}-desc`;
+---
+<figure class:list={['plate', { 'plate--full': fullBleed }]}>
+  <div class="plate__board" role="img" aria-labelledby={`${titleId} ${descId}`}>
+    <p id={titleId} class="visually-hidden">{title}</p>
+    <p id={descId} class="visually-hidden">{desc}</p>
+    <slot />
+  </div>
+  <figcaption class="caption">
+    <span class="plate__num">Figure {figure}.</span> {caption}
+  </figcaption>
+</figure>

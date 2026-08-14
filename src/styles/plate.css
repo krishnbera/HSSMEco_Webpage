@@ -1,0 +1,40 @@
+/* §7.1 — a plate is a figure plus its frame and caption, treated as a distinct
+   object. Plates are the only elements permitted to break the measure, carry
+   colour, and take a number. */
+.plate {
+  margin: var(--space-7) 0;
+  max-width: var(--container);
+}
+
+.plate__board {
+  background: var(--plate);
+  border-top: 1.5px solid var(--ink);
+  border-bottom: 1px solid var(--border);
+  padding: var(--space-5);
+  /* §6.2: centring is permitted only inside a plate. */
+  text-align: center;
+}
+
+.plate figcaption { margin-top: var(--space-3); }
+.plate__num { color: var(--ink); font-weight: 500; }
+
+/* §9.2 glare control, all three mitigations:
+   the board dims via --plate; plates never run full-bleed in dark mode; and they
+   keep a radius so they read as objects rather than as a flashlight. */
+:root[data-theme='dark'] .plate__board,
+:root[data-theme='dark'] .plate--full .plate__board {
+  border-radius: var(--radius-plate);
+  margin-inline: 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .plate__board,
+  :root:not([data-theme='light']) .plate--full .plate__board {
+    border-radius: var(--radius-plate);
+    margin-inline: 0;
+  }
+}
+
+/* Icons and text sitting on a board follow LIGHT ink in both modes, because the
+   board is paper (§4.5, "On plate"). */
+.plate__board { color: #14130F; }

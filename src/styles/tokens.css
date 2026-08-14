@@ -50,6 +50,7 @@
   --measure: 64ch;
   --measure-max: 68ch;
   --margin-page: 54px;
+  --radius-plate: 6px;             /* §7.1 — the only radius in the system */
 }
 
 @media (max-width: 767px) {

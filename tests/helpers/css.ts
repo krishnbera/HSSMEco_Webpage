@@ -36,7 +36,11 @@ function walk(dir: string, acc: string[] = []): string[] {
 
 /** Every style-bearing source file except the two allowlisted by the colour law. */
 export function sourceStyleFiles() {
-  const ALLOW = [TOKENS];
+  const ALLOW = [
+    TOKENS,
+    'src/styles/plate.css',         // §4.5 "on plate": light ink in BOTH modes,
+                                    // so it cannot be var(--ink), which inverts
+  ];
   return walk(join(process.cwd(), 'src'))
     .map((p) => p.replace(process.cwd() + '/', ''))
     .filter((p) => !ALLOW.includes(p))
