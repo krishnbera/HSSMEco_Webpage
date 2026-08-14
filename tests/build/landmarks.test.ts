@@ -13,6 +13,8 @@ describe('built pages carry semantic landmarks (R14)', () => {
   it('index.html declares a language and a canonical URL (D11)', () => {
     const doc = readDist('index.html');
     expect(doc.documentElement.getAttribute('lang')).toBe('en');
-    expect(doc.querySelector('link[rel="canonical"]')?.getAttribute('href')).toMatch(/^https?:\/\//);
+    expect(doc.querySelector('link[rel="canonical"]')?.getAttribute('href')).toBe(
+      'https://krishnbera.github.io/HSSMEco_Webpage/',
+    );
   });
 });
