@@ -1,6 +1,11 @@
 import { defineCollection } from 'astro:content';
 import { file, glob } from 'astro/loaders';
-import { heroElementSchema, modelFamilySchema, capabilitySchema } from './schemas';
+import {
+  heroElementSchema,
+  modelFamilySchema,
+  capabilitySchema,
+  referenceSectionSchema,
+} from './schemas';
 
 // One file, edited as a unit — the ~120-word budget is a whole-file property (§6.1a).
 const heroCopy = defineCollection({
@@ -30,4 +35,9 @@ const capabilities = defineCollection({
   schema: capabilitySchema,
 });
 
-export const collections = { heroCopy, modelFamilies, capabilities };
+const reference = defineCollection({
+  loader: glob({ pattern: '*.md', base: 'src/content/reference' }),
+  schema: referenceSectionSchema,
+});
+
+export const collections = { heroCopy, modelFamilies, capabilities, reference };

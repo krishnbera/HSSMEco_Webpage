@@ -34,6 +34,12 @@ export const capabilitySchema = z.object({
   order: z.number().int(),
 });
 
+/** One section of the Ecosystem reference sub-page (§13). */
+export const referenceSectionSchema = z.object({
+  title: z.string().min(1),
+  order: z.number().int(),
+});
+
 export const siteCopySchema = z.object({
   tagline: z.string(),
   subline: z.string(),

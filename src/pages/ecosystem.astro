@@ -1,0 +1,83 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionRule from '../components/SectionRule.astro';
+import ThemeToggle from '../components/ThemeToggle.astro';
+
+const families = (await getCollection('modelFamilies')).sort((a, b) => a.data.order - b.data.order);
+const sections = (await getCollection('reference')).sort((a, b) => a.data.order - b.data.order);
+const rendered = await Promise.all(sections.map(async (s) => ({ ...s, Content: (await render(s)).Content })));
+
+/** Slug for in-page anchors that questions.md links to (verbatim migrated hashes). */
+const sectionId = (title: string) =>
+  title
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '');
+---
+<BaseLayout
+  title="Ecosystem reference — HSSM"
+  description="How the HSSM ecosystem fits together: the packages, the handoffs, the model families, and where to ask."
+  canonicalPath="/ecosystem/"
+>
+  <div slot="header" class="container"><ThemeToggle /></div>
+
+  <div class="container">
+    <h1 class="display-l measure">Ecosystem reference</h1>
+
+    <SectionRule number="01" title="Model families" />
+    <!-- R25: the honesty constraint, stated up front rather than as a footnote. -->
+    <p class="body-l measure">
+      A selection, not a catalogue. Each family links onward to the packages, where the
+      complete lists live.
+    </p>
+
+    {families.map((f) => (
+      <section class="family" id={f.id}>
+        <h2 class="display-s">{f.data.title}</h2>
+        <p class="body measure">{f.data.summary}</p>
+        <ul class="family__links">
+          {f.data.links.map((l) => (
+            <li>
+              <a class="body-s" href={l.href}>{l.label}</a>
+              {/* R26: the canonical target does not exist upstream yet — say where
+                  this actually lands, so nobody is surprised. */}
+              <span class="caption" data-link-note>{l.note}</span>
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))}
+
+    {rendered.map((s, i) => (
+      <section id={sectionId(s.data.title)}>
+        <SectionRule number={String(i + 2).padStart(2, '0')} title={s.data.title} />
+        <div class="prose measure"><s.Content /></div>
+      </section>
+    ))}
+  </div>
+</BaseLayout>
+
+<style>
+  .family { margin-bottom: var(--space-6); scroll-margin-top: var(--space-6); }
+  .family__links { list-style: none; padding: 0; margin-top: var(--space-3); display: grid; gap: var(--space-2); }
+  .family__links a { color: var(--ink); }
+  .family__links span { display: block; }
+
+  .prose { margin-bottom: var(--space-8); }
+  .prose :global(p), .prose :global(li) { font-size: var(--text-body); line-height: var(--lh-body); }
+  .prose :global(a) { color: var(--ink); }
+  .prose :global(table) { width: 100%; border-collapse: collapse; font-size: var(--text-body-s); }
+  .prose :global(th), .prose :global(td) {
+    border-bottom: 1px solid var(--border);
+    padding: var(--space-2);
+    text-align: left;
+  }
+  .prose :global(pre) {
+    background: var(--surface-sunken);
+    padding: var(--space-3);
+    overflow-x: auto;
+    font-family: var(--font-mono);
+    font-size: var(--text-caption);
+  }
+</style>
