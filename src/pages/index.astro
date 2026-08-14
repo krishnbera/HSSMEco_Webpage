@@ -3,22 +3,27 @@ import { load } from 'js-yaml';
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ThemeToggle from '../components/ThemeToggle.astro';
+import Hero from '../components/hero/Hero.astro';
 import PayoffBand from '../components/sections/PayoffBand.astro';
 import WorkedExample from '../components/sections/WorkedExample.astro';
 import FourStepChain from '../components/sections/FourStepChain.astro';
 import CapabilityGrid from '../components/sections/CapabilityGrid.astro';
 import Credibility from '../components/sections/Credibility.astro';
-import { siteCopySchema } from '../schemas';
+import { siteCopySchema, heroElementSchema } from '../schemas';
 import raw from '../content/copy/site.yaml?raw';
+import heroRaw from '../content/copy/hero.yaml?raw';
 
 const copy = siteCopySchema.parse(load(raw));
+const elements = Object.fromEntries(
+  Object.entries(load(heroRaw) as Record<string, unknown>)
+    .map(([id, el]) => [id, { id, ...heroElementSchema.parse(el) }]),
+);
 const capabilities = await getCollection('capabilities');
 ---
 <BaseLayout title="HSSM Ecosystem" description={copy.subline} canonicalPath="/">
   <div slot="header" class="container"><ThemeToggle /></div>
 
-  <h1 class="container display-xl measure">{copy.tagline}</h1>
-  <p class="container body-l measure">{copy.subline}</p>
+  <Hero copy={copy} elements={elements} />
 
   <PayoffBand copy={copy.payoff} />
   <WorkedExample copy={copy.workedExample} />

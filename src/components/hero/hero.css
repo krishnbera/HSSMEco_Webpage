@@ -70,6 +70,23 @@
 /* Reserving the payload's height in the flow means revealing it shifts nothing
    (future-features §1.2 constraint 3, and a pass-2 prerequisite). */
 
+.hero__subline { margin-top: var(--space-4); color: var(--ink-muted); }
+.hero__ctas { margin-top: var(--space-5); display: flex; gap: var(--space-3); }
+
+/* §4.6 and §12: no coloured button, badge or call-to-action. The primary CTA
+   earns its emphasis from a heavier ink rule, which is the monochrome equivalent. */
+.cta {
+  display: inline-block;
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--border-strong);
+  color: var(--ink);
+  text-decoration: none;
+  font-family: var(--font-text);
+  font-size: var(--text-body);
+}
+.cta:hover, .cta:focus-visible { background: var(--surface); border-color: var(--ink); }
+.cta--primary { border-color: var(--ink); border-width: 1.5px; font-weight: 500; }
+
 /* --- desktop composition (content spec Appendix A) ---------------------- */
 
 .hero__figure { position: relative; margin-top: var(--space-7); }

@@ -1,5 +1,6 @@
 ---
 import './hero.css';
+import SectionRule from '../SectionRule.astro';
 import HeroCore from './HeroCore.astro';
 import HeroModules from './HeroModules.astro';
 import HeroStreams from './HeroStreams.astro';
@@ -15,22 +16,48 @@ interface Props {
 }
 const { copy, elements } = Astro.props;
 ---
-<div class="hero__figure">
-  <Paths />
-  <div class="hero__grid">
-    <div class="hero__left">
-      <HeroStreams elements={elements} />
-      <p class="hero__caption caption">{copy.heroCaptions.left}</p>
-    </div>
+<section id="hero" class="container">
+  <SectionRule number="01" title="Hero" />
+  <h1 class="display-xl measure">{copy.tagline}</h1>
+  <p class="body-l measure hero__subline">{copy.subline}</p>
 
-    <div class="hero__centre">
-      <HeroCore elements={elements} />
-      <HeroModules elements={elements} />
-    </div>
+  <p class="hero__ctas">
+    <a class="cta cta--primary" href={copy.ctaPrimary.href} data-cta={copy.ctaPrimary.hook}>
+      {copy.ctaPrimary.label}
+    </a>
+    <a class="cta" href={copy.ctaSecondary.href} data-cta={copy.ctaSecondary.hook}>
+      {copy.ctaSecondary.label} ↓
+    </a>
+  </p>
 
-    <div class="hero__right">
-      <HeroContribution elements={elements} />
-      <p class="hero__caption caption">{copy.heroCaptions.right}</p>
+  <div class="hero__figure">
+    <p class="visually-hidden" data-hero-equivalent>
+      A diagram of the HSSM ecosystem as a commons. At the centre sit six model tiles —
+      drift diffusion, collapsing bound, race accumulator, attentional drift, and
+      learning-and-deciding models, plus one empty slot marked with a plus sign. Beneath
+      them runs a row of supporting modules: simulation, simulation-based inference,
+      sampling, validation, and plots. From the left, three streams of data — behaviour,
+      neural recordings, and eye-tracking — flow into the models, and a return path
+      carries posterior distributions over mechanism back out. From the right, a
+      contributed model is trained once into a shared artifact and docks at the empty
+      slot, and a return path carries it outward to wider community adoption.
+    </p>
+    <Paths />
+    <div class="hero__grid">
+      <div class="hero__left">
+        <HeroStreams elements={elements} />
+        <p class="hero__caption caption">{copy.heroCaptions.left}</p>
+      </div>
+
+      <div class="hero__centre">
+        <HeroCore elements={elements} />
+        <HeroModules elements={elements} />
+      </div>
+
+      <div class="hero__right">
+        <HeroContribution elements={elements} />
+        <p class="hero__caption caption">{copy.heroCaptions.right}</p>
+      </div>
     </div>
   </div>
-</div>
+</section>

@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { load } from 'js-yaml';
-import { renderComponent } from './helpers/dom';
+import { renderComponent, readDist } from './helpers/dom';
 import HeroElement from '../src/components/hero/HeroElement.astro';
 import Hero from '../src/components/hero/Hero.astro';
 import { siteCopySchema, heroElementSchema } from '../src/schemas';
@@ -161,5 +161,44 @@ describe('the hero has a defined mobile composition, not a squeeze (R9)', () => 
     // The single-column stack makes the arrows meaningless; the captions carry the
     // relationship instead (§6.1: "flanks stack beneath the core, or degrade to captions").
     expect(css).toMatch(/@media[^{]*max-width:\s*48em[^{]*\{[\s\S]*\.hero__paths[\s\S]*display:\s*none/);
+  });
+});
+
+describe('the hero is complete without interaction and without sight', () => {
+  it('carries a visually-hidden text equivalent adjacent to the figure (§7.3)', async () => {
+    const doc = await renderComponent(Hero, { props: heroProps });
+    const alt = doc.querySelector('[data-hero-equivalent]')!;
+    expect(alt.className).toContain('visually-hidden');
+    // Long enough to be an argument, not a label.
+    expect(alt.textContent!.trim().split(/\s+/).length).toBeGreaterThan(40);
+  });
+
+  it('states the flywheel in both directions in that equivalent', async () => {
+    const doc = await renderComponent(Hero, { props: heroProps });
+    const text = doc.querySelector('[data-hero-equivalent]')!.textContent!.toLowerCase();
+    expect(text).toMatch(/data/);
+    expect(text).toMatch(/contribut|model/);
+  });
+});
+
+describe('the CTAs carry stable instrumentation hooks (R20)', () => {
+  it('both hooks are present on the built page', () => {
+    const doc = readDist('index.html');
+    expect(doc.querySelector('[data-cta="get-started"]')).not.toBeNull();
+    expect(doc.querySelector('[data-cta="see-it-work"]')).not.toBeNull();
+  });
+
+  it('the secondary CTA scrolls to the worked example, which exists', () => {
+    const doc = readDist('index.html');
+    const href = doc.querySelector('[data-cta="see-it-work"]')!.getAttribute('href')!;
+    expect(href.startsWith('#')).toBe(true);
+    expect(doc.getElementById(href.slice(1))).not.toBeNull();
+  });
+
+  it('neither CTA is a coloured button (§4.6, §12)', () => {
+    const doc = readDist('index.html');
+    for (const cta of doc.querySelectorAll('[data-cta]')) {
+      expect(cta.getAttribute('style') ?? '').not.toMatch(/background|color/);
+    }
   });
 });
