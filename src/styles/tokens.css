@@ -1,0 +1,91 @@
+/*
+  THE single source of colour, type and space for this site.
+  Nothing else in src/ may contain a colour literal or a bare px length
+  (0, 1px and 1.5px excepted). tests/colour-law.test.ts and tests/spacing.test.ts
+  enforce that. See docs/ecosystem-landing-page-design-philosophy.md §2.
+*/
+:root {
+  /* --- chrome, light (§4.2) --- */
+  --ground: #FCFBF8;
+  --surface: #F5F3EE;
+  --surface-sunken: #EFEDE6;
+  --border: #E5E1D8;
+  /* §4.2 published #C9C4B8 → 1.68:1 on ground. Corrected for SC 1.4.11 (3:1). */
+  --border-strong: #908C84;
+  --ink: #14130F;
+  --ink-muted: #4B4740;
+  /* §4.2 published #8A857B → 3.55:1 on ground. Corrected for AA small text (4.5:1). */
+  --ink-faint: #706B63;
+  --plate: #FCFBF8;
+
+  /* --- the data scale, "Accumulation" (§4.4). One version only: figures sit on
+         paper in both modes, so there is no dark variant to drift. --- */
+  --data-01: #4C1D95;
+  --data-02: #3730A3;
+  --data-03: #2947C4;
+  --data-04: #1D4ED8;
+  --data-05: #0369A1;
+  --data-06: #0891B2;
+  --data-07: #0D9488;
+  --data-08: #10B981;
+
+  /* --- type scale (§5.3): size / line-height / tracking --- */
+  --text-display-xl: 54px;   --lh-display-xl: 1.05;  --tr-display-xl: -0.025em;
+  --text-display-l: 34px;    --lh-display-l: 1.10;   --tr-display-l: -0.022em;
+  --text-display-m: 25px;    --lh-display-m: 1.12;   --tr-display-m: -0.020em;
+  --text-display-s: 19px;    --lh-display-s: 1.20;   --tr-display-s: -0.015em;
+  --text-body-l: 17px;       --lh-body-l: 1.60;
+  --text-body: 15px;         --lh-body: 1.65;
+  --text-body-s: 13.5px;     --lh-body-s: 1.60;
+  --text-label: 11px;        --lh-label: 1.00;       --tr-label: 0.18em;
+  --text-caption: 12px;      --lh-caption: 1.55;
+
+  /* --- space (§6.4): 4px base, no arbitrary values --- */
+  --space-1: 4px;   --space-2: 8px;   --space-3: 12px;  --space-4: 16px;
+  --space-5: 24px;  --space-6: 32px;  --space-7: 48px;  --space-8: 64px;
+  --space-9: 96px;
+
+  /* --- layout (§6.1) --- */
+  --container: 1200px;
+  --measure: 64ch;
+  --measure-max: 68ch;
+  --margin-page: 54px;
+}
+
+@media (max-width: 767px) {
+  :root {
+    /* §5.3: "Below 768px, Display XL drops to 34 and Display L to 26; body sizes hold." */
+    --text-display-xl: 34px;
+    --text-display-l: 26px;
+    --margin-page: 24px;
+  }
+}
+
+/* Dark mode is a second set of values for tokens that exist anyway — never a second
+   stylesheet and never a second design (§9.3). Only chrome changes; the plate stays
+   paper and the data scale is untouched. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #131211;
+    --surface: #1C1B18;
+    --surface-sunken: #232019;
+    --border: #2C2A26;
+    --border-strong: #686661;   /* §4.3 published #413E38 → 1.76:1. Corrected to 3:1. */
+    --ink: #F3F1EC;
+    --ink-muted: #A8A298;
+    --ink-faint: #8F8A80;
+    --plate: #F2F0EB;           /* dimmed board — §9.2 glare control */
+  }
+}
+
+:root[data-theme="dark"] {
+  --ground: #131211;
+  --surface: #1C1B18;
+  --surface-sunken: #232019;
+  --border: #2C2A26;
+  --border-strong: #686661;
+  --ink: #F3F1EC;
+  --ink-muted: #A8A298;
+  --ink-faint: #8F8A80;
+  --plate: #F2F0EB;
+}
