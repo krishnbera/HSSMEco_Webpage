@@ -76,7 +76,12 @@ describe('FourStepChain supports the double reading (§6.4)', () => {
 
   it('links to the reference sub-page exactly once (§6.4: "linked once from here")', async () => {
     const doc = await renderComponent(FourStepChain, { props: { copy: copy.chain } });
-    const internal = [...doc.querySelectorAll('a')].filter((a) => a.getAttribute('href') === '/ecosystem/');
+    const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+    const expected = `${base}/ecosystem/`;
+    const internal = [...doc.querySelectorAll('a')].filter((a) => {
+      const href = a.getAttribute('href') ?? '';
+      return href.endsWith('/ecosystem/') && href === expected;
+    });
     expect(internal).toHaveLength(1);
   });
 });
